@@ -14,7 +14,6 @@ public interface MedicineMapper {
     MedicineResponse medicineToMedicineResponse(Medicine medicine);
 
     @Mapping(target = "presentation", ignore = true)
-//    @Mapping(target = "laboratoryBranches", ignore = true)
     @Mapping(target = "brand", ignore = true)
     @Mapping(target = "baseFormula", ignore = true)
     Medicine medicineDtoToMedicine(MedicineDTO medicineDTO);

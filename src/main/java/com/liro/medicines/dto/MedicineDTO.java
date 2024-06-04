@@ -17,16 +17,6 @@ public class MedicineDTO {
 
     private String formalName;
 
-    private Integer approxDurationInMinutes;
-
-    private Integer minRecommendedAge;
-
-    private Boolean onlyVetUse;
-
-    private Boolean needPrescription;
-
-    private String conservation;
-
     private Long brandId;
 
     private Long baseFormulaId;

@@ -20,11 +20,6 @@ public class Medicine {
 
     private String name;
     private String formalName;
-    private Integer approxDurationInMinutes;
-    private Integer minRecommendedAge;
-    private Boolean onlyVetUse;
-    private Boolean needPrescription;
-    private String conservation;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "brand_id")

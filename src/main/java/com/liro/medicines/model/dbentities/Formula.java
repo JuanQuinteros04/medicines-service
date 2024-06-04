@@ -21,14 +21,6 @@ public class Formula {
 
     private String name;
     private String formalName;
-    private Integer approxDurationInMinutes;
-    private Integer minRecommendedAge;
-    private Boolean onlyVetUse;
-    private Boolean needPrescription;
-    private String details;
-
-    private Double quantity;
-    private String quantityType;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "baseFormula")
     private Set<Medicine> baseFormulaOf;
