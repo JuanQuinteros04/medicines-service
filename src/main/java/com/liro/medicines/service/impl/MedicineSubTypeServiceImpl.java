@@ -9,8 +9,9 @@ import com.liro.medicines.service.MedicineSubTypeService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import com.liro.medicines.exceptions.ResourceNotFoundException;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class MedicineSubTypeServiceImpl implements MedicineSubTypeService {
 
     private final MedicineSubTypeRepository medicineSubTypeRepository;
