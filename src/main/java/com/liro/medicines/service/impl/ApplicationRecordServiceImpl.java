@@ -71,13 +71,6 @@ public class ApplicationRecordServiceImpl implements ApplicationRecordService {
         return applicationRecordMapper.applicationRecordToApplicationRecordResponse(applicationRecord);
     }
 
-    @Override
-    public Page<ApplicationRecordResponse> findAllByNameContaining(String nameContaining, Pageable pageable) {
-        nameContaining = nameContaining.toLowerCase();
-
-        return applicationRecordRepository.findAllByNameContaining(nameContaining, pageable)
-                .map(applicationRecordMapper::applicationRecordToApplicationRecordResponse);
-    }
 
     @Override
     public ApplicationRecordResponse createApplicationRecord(ApplicationRecordDTO applicationRecordDTO, String token) {

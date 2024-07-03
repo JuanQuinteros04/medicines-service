@@ -36,12 +36,6 @@ public class ApplicationRecordController {
         return ResponseEntity.ok(applicationRecordService.findAll(pageable));
     }
 
-    @GetMapping(value = "/getByNameContaining", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Page<ApplicationRecordResponse>> getByNameContaining(
-            @RequestParam("nameContaining") String nameContaining, Pageable pageable) {
-        return ResponseEntity.ok(applicationRecordService.findAllByNameContaining(nameContaining, pageable));
-    }
-
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<ApiResponse> createApplicationRecord(@Valid @RequestBody ApplicationRecordDTO applicationRecordDto,
                                                                @RequestHeader(name = "Authorization", required = false) String token) {

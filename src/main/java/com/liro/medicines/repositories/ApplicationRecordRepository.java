@@ -9,6 +9,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ApplicationRecordRepository extends JpaRepository<ApplicationRecord, Long> {
 
-    Page<ApplicationRecord> findAllByNameContaining(String nameContaining, Pageable pageable);
-
 }

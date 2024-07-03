@@ -11,8 +11,6 @@ public interface ApplicationRecordService {
 
     ApplicationRecordResponse findById(Long applicationRecordId);
 
-    Page<ApplicationRecordResponse> findAllByNameContaining(String nameContaining, Pageable pageable);
-
     ApplicationRecordResponse createApplicationRecord(ApplicationRecordDTO applicationRecordDTO, String token);
 
 }
