@@ -3,18 +3,15 @@ package com.liro.medicines.model.dbentities;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
-@Table(name = "medicine_sub_type")
+@Table(name = "component")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MedicineSubType {
-
+public class Component {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,6 +19,7 @@ public class MedicineSubType {
     @Column(unique = true)
     private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "medicineSubTypes")
-    private Set<Formula> formulas = new HashSet<>();
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "disease_id")
+    private Disease disease;
 }

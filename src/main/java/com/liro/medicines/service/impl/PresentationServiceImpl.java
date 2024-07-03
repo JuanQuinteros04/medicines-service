@@ -57,14 +57,7 @@ public class PresentationServiceImpl implements PresentationService {
             presentationDTO.setName(presentationDTO.getName().toLowerCase());
         }
 
-        Medicine medicine = medicineRepository.findById(presentationDTO.getMedicineId())
-                .orElseThrow(() -> new ResourceNotFoundException("Medicine not found with id: "
-                        + presentationDTO.getMedicineId()));
-
         Presentation presentation = presentationMapper.presentationDtoToPresentation(presentationDTO);
-
-        medicine.setPresentation(presentation);
-        presentation.setMedicine(medicine);
 
         return presentationMapper.presentationToPresentationResponse(
                 presentationRepository.save(presentation)

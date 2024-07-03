@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Getter
 @Setter
-public class PresentationResponse {
+public class DiseaseResponse {
 
     private Long id;
     private String name;

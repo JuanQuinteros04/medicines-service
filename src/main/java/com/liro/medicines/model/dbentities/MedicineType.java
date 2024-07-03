@@ -7,18 +7,18 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "presentations")
+@Table(name = "medicine_type")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Presentation {
+public class MedicineType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Pastilla, aerosol, comprimido, etc
+    @Column(unique = true)
     private String name;
 }

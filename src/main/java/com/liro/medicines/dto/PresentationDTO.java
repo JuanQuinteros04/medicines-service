@@ -14,6 +14,4 @@ import lombok.experimental.SuperBuilder;
 public class PresentationDTO {
 
     private String name;
-
-    private Long medicineId;
 }

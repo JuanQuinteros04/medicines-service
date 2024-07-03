@@ -11,24 +11,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Getter
 @Setter
-public class FormulaResponse {
+public class MedicineTypeResponse {
 
     private Long id;
     private String name;
-
-    private String formalName;
-
-    private Integer approxDurationInMinutes;
-
-    private Integer minRecommendedAge;
-
-    private Boolean onlyVetUse;
-
-    private Boolean needPrescription;
-
-    private String details;
-
-    private Double quantity;
-
-    private String quantityType;
 }

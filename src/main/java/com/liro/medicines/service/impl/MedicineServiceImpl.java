@@ -1,14 +1,11 @@
 package com.liro.medicines.service.impl;
 
 import com.liro.medicines.dto.MedicineDTO;
-import com.liro.medicines.dto.UserDTO;
+import com.liro.medicines.dto.MedicineGroupDTO;
 import com.liro.medicines.dto.mappers.MedicineMapper;
 import com.liro.medicines.dto.responses.MedicineResponse;
 import com.liro.medicines.exceptions.ResourceNotFoundException;
-import com.liro.medicines.exceptions.UnauthorizedException;
-import com.liro.medicines.model.dbentities.Brand;
-import com.liro.medicines.model.dbentities.Formula;
-import com.liro.medicines.model.dbentities.Medicine;
+import com.liro.medicines.model.dbentities.*;
 import com.liro.medicines.repositories.*;
 import com.liro.medicines.service.MedicineService;
 import org.springframework.data.domain.Page;
@@ -16,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -24,22 +22,27 @@ public class MedicineServiceImpl implements MedicineService {
     private final MedicineRepository medicineRepository;
     private final MedicineMapper medicineMapper;
     private final PresentationRepository presentationRepository;
-    private final MedicineSubTypeRepository medicineSubTypeRepository;
+    private final MedicineTypeRepository medicineTypeRepository;
+    private final MedicineGroupRepository medicineGroupRepository;
+
     private final BrandRepository brandRepository;
-    private final FormulaRepository formulaRepository;
+    private final ComponentRepository componentRepository;
+
 
     public MedicineServiceImpl(MedicineRepository medicineRepository,
                                MedicineMapper medicineMapper,
                                PresentationRepository presentationRepository,
-                               MedicineSubTypeRepository medicineSubTypeRepository,
+                               MedicineTypeRepository medicineTypeRepository,
                                BrandRepository brandRepository,
-                               FormulaRepository formulaRepository) {
+                               MedicineGroupRepository medicineGroupRepository,
+                               ComponentRepository componentRepository) {
         this.medicineRepository = medicineRepository;
         this.medicineMapper = medicineMapper;
         this.presentationRepository = presentationRepository;
-        this.medicineSubTypeRepository = medicineSubTypeRepository;
+        this.medicineTypeRepository = medicineTypeRepository;
         this.brandRepository = brandRepository;
-        this.formulaRepository = formulaRepository;
+        this.medicineGroupRepository = medicineGroupRepository;
+        this.componentRepository = componentRepository;
     }
 
     @Override
@@ -52,49 +55,66 @@ public class MedicineServiceImpl implements MedicineService {
         Medicine medicine = medicineRepository.findById(medicineId)
                 .orElseThrow(() -> new ResourceNotFoundException("Medicine not found with id: " + medicineId));
 
-        return medicineMapper.medicineToMedicineResponse(medicine);    }
+        return medicineMapper.medicineToMedicineResponse(medicine);
+    }
 
     @Override
     public Page<MedicineResponse> findAllByNameContaining(String nameContaining, Pageable pageable) {
         nameContaining = nameContaining.toLowerCase();
 
         return medicineRepository.findAllByNameContaining(nameContaining, pageable)
-                .map(medicineMapper::medicineToMedicineResponse);    }
+                .map(medicineMapper::medicineToMedicineResponse);
+    }
 
     @Override
     public Page<MedicineResponse> findAllByNameContainingAndPresentationName(String nameContaining, String presentationName, Pageable pageable) {
         nameContaining = nameContaining.toLowerCase();
         presentationName = presentationName.toLowerCase();
 
-        return medicineRepository.findAllByNameContainingAndPresentationName(nameContaining, presentationName,  pageable)
-                .map(medicineMapper::medicineToMedicineResponse);    }
+        return medicineRepository.findAllByNameContainingAndPresentationName(nameContaining, presentationName, pageable)
+                .map(medicineMapper::medicineToMedicineResponse);
+    }
 
     @Override
     public MedicineResponse createMedicine(MedicineDTO medicineDTO) {
-        if (medicineDTO.getName() != null) {
-            medicineDTO.setName(medicineDTO.getName().toLowerCase());
+        if (medicineDTO.getCommercialName() != null) {
+            medicineDTO.setCommercialName(medicineDTO.getCommercialName().toLowerCase());
         }
         if (medicineDTO.getFormalName() != null) {
             medicineDTO.setFormalName(medicineDTO.getFormalName().toLowerCase());
         }
 
-        Formula baseFormula = formulaRepository.findById(medicineDTO.getBaseFormulaId())
-                .orElseThrow(() -> new ResourceNotFoundException("Formula not found with id: " + medicineDTO.getBaseFormulaId()));
-
         Brand brand = brandRepository.findById(medicineDTO.getBrandId())
                 .orElseThrow(() -> new ResourceNotFoundException("Brand not found with id: " + medicineDTO.getBrandId()));
 
+        MedicineType medicineType = medicineTypeRepository.findById(medicineDTO.getMedicineTypeId())
+                .orElseThrow(() -> new ResourceNotFoundException("MedicineType not found with id: " + medicineDTO.getMedicineTypeId()));
+
+        MedicineGroup medicineGroup = medicineGroupRepository.findById(medicineDTO.getMedicineGroupId())
+                .orElseThrow(() -> new ResourceNotFoundException("MedicineGroup not found with id: " + medicineDTO.getMedicineGroupId()));
+
+        Presentation presentation = presentationRepository.findById(medicineDTO.getPresentationId())
+                .orElseThrow(() -> new ResourceNotFoundException("Presentation not found with id: " + medicineDTO.getPresentationId()));
+
+        HashSet<Component> components = (HashSet<Component>) medicineDTO.getComponents().stream()
+                .map(component -> componentRepository.findById(component)
+                        .orElseThrow(() -> new ResourceNotFoundException("Component not found with id: " + component)))
+                .collect(Collectors.toSet());
+
         Medicine medicine = medicineMapper.medicineDtoToMedicine(medicineDTO);
 
-        if (baseFormula.getBaseFormulaOf() == null) baseFormula.setBaseFormulaOf(new HashSet<>());
-        baseFormula.getBaseFormulaOf().add(medicine);
-        medicine.setBaseFormula(baseFormula);
 
         if (brand.getMedicines() == null) brand.setMedicines(new HashSet<>());
         brand.getMedicines().add(medicine);
         medicine.setBrand(brand);
 
+        medicine.setMedicineGroup(medicineGroup);
+        medicine.setMedicineType(medicineType);
+        medicine.setPresentation(presentation);
+        medicine.setComponents(components);
+
         return medicineMapper.medicineToMedicineResponse(
                 medicineRepository.save(medicine)
-        );    }
+        );
+    }
 }

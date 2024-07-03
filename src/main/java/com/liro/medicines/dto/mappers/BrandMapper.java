@@ -13,5 +13,4 @@ public interface BrandMapper {
 
     @Mapping(target = "medicines", ignore = true)
     Brand brandDtoToBrand(BrandDTO brandDTO);
-
 }

@@ -1,4 +1,4 @@
-package com.liro.medicines.dto.responses;
+package com.liro.medicines.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,8 +11,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Getter
 @Setter
-public class PresentationResponse {
-
-    private Long id;
+public class ComponentDTO {
     private String name;
+    private Long diseaseId;
 }
