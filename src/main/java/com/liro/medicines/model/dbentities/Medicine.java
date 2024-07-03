@@ -29,6 +29,7 @@ public class Medicine {
     private String dosesUnity;
     private AnimalType animalType;
 
+
     @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "presentation_id")
     private Presentation presentation;

@@ -25,6 +25,7 @@ public class MedicineDTO {
     private String dosesUnity;
     private AnimalType animalType;
 
+
     private Long brandId;
     private Long medicineTypeId;
     private Long medicineGroupId;
