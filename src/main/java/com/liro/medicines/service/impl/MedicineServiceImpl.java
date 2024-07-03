@@ -59,19 +59,10 @@ public class MedicineServiceImpl implements MedicineService {
     }
 
     @Override
-    public Page<MedicineResponse> findAllByNameContaining(String nameContaining, Pageable pageable) {
+    public Page<MedicineResponse> findAllByCommercialNameContaining(String nameContaining, Pageable pageable) {
         nameContaining = nameContaining.toLowerCase();
 
-        return medicineRepository.findAllByNameContaining(nameContaining, pageable)
-                .map(medicineMapper::medicineToMedicineResponse);
-    }
-
-    @Override
-    public Page<MedicineResponse> findAllByNameContainingAndPresentationName(String nameContaining, String presentationName, Pageable pageable) {
-        nameContaining = nameContaining.toLowerCase();
-        presentationName = presentationName.toLowerCase();
-
-        return medicineRepository.findAllByNameContainingAndPresentationName(nameContaining, presentationName, pageable)
+        return medicineRepository.findAllByCommercialNameContaining(nameContaining, pageable)
                 .map(medicineMapper::medicineToMedicineResponse);
     }
 

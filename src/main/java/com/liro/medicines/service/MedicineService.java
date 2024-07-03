@@ -11,9 +11,7 @@ public interface MedicineService {
 
     MedicineResponse findById(Long medicineId);
 
-    Page<MedicineResponse> findAllByNameContaining(String nameContaining, Pageable pageable);
-
-    Page<MedicineResponse> findAllByNameContainingAndPresentationName(String nameContaining, String presentationName, Pageable pageable);
+    Page<MedicineResponse> findAllByCommercialNameContaining(String nameContaining, Pageable pageable);
 
     MedicineResponse createMedicine(MedicineDTO medicineDTO);
 

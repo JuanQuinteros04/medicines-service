@@ -36,17 +36,10 @@ public class MedicineController {
         return ResponseEntity.ok(medicineService.findAll(pageable));
     }
 
-    @GetMapping(value = "/getByNameContaining", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(value = "/getByCommercialNameContaining", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Page<MedicineResponse>> getByNameContaining(
-            @RequestParam("nameContaining") String nameContaining, Pageable pageable) {
-        return ResponseEntity.ok(medicineService.findAllByNameContaining(nameContaining, pageable));
-    }
-
-    @GetMapping(value = "/getByNameContainingAndPresentationName", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Page<MedicineResponse>> getByNameContainingAndPresentationName(@RequestParam("nameContaining") String nameContaining,
-                                                                                         @RequestParam("presentationName") String presentationName,
-                                                                                         Pageable pageable) {
-        return ResponseEntity.ok(medicineService.findAllByNameContainingAndPresentationName(nameContaining, presentationName, pageable));
+            @RequestParam("commercialNameContaining") String nameContaining, Pageable pageable) {
+        return ResponseEntity.ok(medicineService.findAllByCommercialNameContaining(nameContaining, pageable));
     }
 
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
