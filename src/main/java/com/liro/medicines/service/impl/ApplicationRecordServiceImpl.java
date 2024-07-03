@@ -83,6 +83,7 @@ public class ApplicationRecordServiceImpl implements ApplicationRecordService {
                 .orElseThrow(() -> new ResourceNotFoundException("Medicine not found with id: " + applicationRecordDTO.getMedicineId()));
 
         applicationRecord.setMedicine(medicine);
+        applicationRecord.setIsApplied(Boolean.FALSE);
 
         UserDTO userDTO =  getUser(token);
 
