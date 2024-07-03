@@ -25,6 +25,7 @@ public interface MedicineMapper {
     @Mapping(target = "brand", ignore = true)
     @Mapping(target = "medicineType", ignore = true)
     @Mapping(target = "medicineGroup", ignore = true)
+    @Mapping(target = "components", ignore = true)
     Medicine medicineDtoToMedicine(MedicineDTO medicineDTO);
 
     default List<Long> mapComponentsToIds(Set<Component> components) {
