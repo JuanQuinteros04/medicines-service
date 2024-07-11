@@ -1,5 +1,6 @@
 package com.liro.medicines.dto.responses;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,10 +23,10 @@ public class ApplicationRecordResponse {
     private String details;
     private Long quantity;
     private String lote;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     private LocalDate applicationDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     private LocalDate endDate;
-
-    private Boolean isApplied;
 
     private Long medicineId;
 }

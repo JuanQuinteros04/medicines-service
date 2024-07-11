@@ -27,8 +27,6 @@ public class ApplicationRecord {
     private LocalDate applicationDate;
     private LocalDate endDate;
 
-    private Boolean isApplied;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "medicine_id")
     private Medicine medicine;
