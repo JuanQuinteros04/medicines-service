@@ -13,6 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/applicationRecords")
@@ -47,5 +48,11 @@ public class ApplicationRecordController {
 
         return ResponseEntity.created(location).body(
                 new ApiResponse(true, "ApplicationRecord created successfully"));
+    }
+
+    @GetMapping(value = "/latest-per-group", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<List<ApplicationRecordResponse>> getLatestApplicationsForEachMedicineGroup() {
+        List<ApplicationRecordResponse> applicationRecords = applicationRecordService.getLatestApplicationsForEachMedicineGroup();
+        return ResponseEntity.ok(applicationRecords);
     }
 }

@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.liro.medicines.utils.Util.getUser;
@@ -94,5 +95,11 @@ public class ApplicationRecordServiceImpl implements ApplicationRecordService {
         return applicationRecordMapper.applicationRecordToApplicationRecordResponse(
                 applicationRecordRepository.save(applicationRecord)
         );
+    }
+
+
+    public List<ApplicationRecordResponse> getLatestApplicationsForEachMedicineGroup() {
+        return applicationRecordRepository.findLatestApplicationsForEachMedicineGroup()
+                .stream().map(application -> applicationRecordMapper.applicationRecordToApplicationRecordResponse(application)).collect(Collectors.toList());
     }
 }
