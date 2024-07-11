@@ -98,8 +98,8 @@ public class ApplicationRecordServiceImpl implements ApplicationRecordService {
     }
 
 
-    public List<ApplicationRecordResponse> getLatestApplicationsForEachMedicineGroup() {
-        return applicationRecordRepository.findLatestApplicationsForEachMedicineGroup()
-                .stream().map(application -> applicationRecordMapper.applicationRecordToApplicationRecordResponse(application)).collect(Collectors.toList());
+    public List<ApplicationRecordResponse> getLatestApplicationsForEachMedicineGroup(Long animalId, Long medicineTypeId) {
+        return applicationRecordRepository.findLatestApplicationsForEachMedicineGroupByAnimalAndType(animalId, medicineTypeId)
+                .stream().map(applicationRecordMapper::applicationRecordToApplicationRecordResponse).collect(Collectors.toList());
     }
 }
