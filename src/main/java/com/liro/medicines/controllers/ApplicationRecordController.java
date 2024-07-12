@@ -51,9 +51,9 @@ public class ApplicationRecordController {
     }
 
     @GetMapping(value = "/latest-per-group", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<List<ApplicationRecordResponse>> getLatestApplicationsForEachMedicineGroup(@RequestParam("animalId") Long animalId,
-                                                                                                     @RequestParam("medicineTypeId") Long medicineTypeId) {
-        List<ApplicationRecordResponse> applicationRecords = applicationRecordService.getLatestApplicationsForEachMedicineGroup(animalId, medicineTypeId);
+    public ResponseEntity<ApplicationRecordResponse> getLatestApplicationsForEachMedicineGroup(@RequestParam("animalId") Long animalId,
+                                                                                                     @RequestParam("medicineGroupId") Long medicineGroupId) {
+        ApplicationRecordResponse applicationRecords = applicationRecordService.getLatestApplicationsForEachMedicineGroup(animalId, medicineGroupId);
         return ResponseEntity.ok(applicationRecords);
     }
 }
