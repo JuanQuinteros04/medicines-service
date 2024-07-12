@@ -28,5 +28,5 @@ public interface ApplicationRecordRepository extends JpaRepository<ApplicationRe
     List<ApplicationRecord> findLatestApplicationsForEachMedicineGroupByAnimalAndType(@Param("animalId") Long animalId,
                                                                                       @Param("medicineTypeId") Long medicineTypeId);
 
-    Optional<ApplicationRecord> findTopByMedicineMedicineGroupIdAndAnimalIdOrderByApplicationDate(Long animalId, Long medicineGroupId);
+    Optional<ApplicationRecord> findTopByAnimalIdAndMedicineMedicineGroupIdOrderByApplicationDateDesc(Long animalId, Long medicineGroupId);
 }

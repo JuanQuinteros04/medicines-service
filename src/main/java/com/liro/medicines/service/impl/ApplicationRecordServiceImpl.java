@@ -100,7 +100,7 @@ public class ApplicationRecordServiceImpl implements ApplicationRecordService {
 
     public ApplicationRecordResponse getLatestApplicationsForEachMedicineGroup(Long animalId, Long medicineGroupId) {
         return applicationRecordMapper.applicationRecordToApplicationRecordResponse(
-                applicationRecordRepository.findTopByMedicineMedicineGroupIdAndAnimalIdOrderByApplicationDate(animalId, medicineGroupId)
+                applicationRecordRepository.findTopByAnimalIdAndMedicineMedicineGroupIdOrderByApplicationDateDesc(animalId, medicineGroupId)
                         .orElseThrow(() -> new ResourceNotFoundException("Application not found")));
     }
 }
