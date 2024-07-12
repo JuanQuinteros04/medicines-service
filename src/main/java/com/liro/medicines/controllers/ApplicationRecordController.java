@@ -1,4 +1,5 @@
 package com.liro.medicines.controllers;
+
 import com.liro.medicines.dto.ApiResponse;
 import com.liro.medicines.dto.ApplicationRecordDTO;
 import com.liro.medicines.dto.responses.ApplicationRecordResponse;
@@ -13,7 +14,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping("/applicationRecords")
@@ -33,8 +33,18 @@ public class ApplicationRecordController {
     }
 
     @GetMapping(value = "/getAll", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Page<ApplicationRecordResponse>> getAll(Pageable pageable) {
-        return ResponseEntity.ok(applicationRecordService.findAll(pageable));
+    public ResponseEntity<Page<ApplicationRecordResponse>> getAll(Pageable pageable,
+                                                                  @RequestParam("animalId") Long animalId,
+                                                                  @RequestParam("medicineGroupId") Long medicineGroupId,
+                                                                  @RequestParam("medicineTypeId") Long medicineTypeId) {
+        if(medicineGroupId != null){
+            return ResponseEntity.ok(applicationRecordService.findAllByAnimalIdAndMedicineMedicineGroupId(pageable, animalId, medicineGroupId));
+        } else if (medicineTypeId != null) {
+            return ResponseEntity.ok(applicationRecordService.findAllByAnimalIdAndMedicineMedicineTypeId(pageable, animalId, medicineTypeId));
+        }else{
+            return ResponseEntity.ok(applicationRecordService.findAll(pageable));
+
+        }
     }
 
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -52,8 +62,15 @@ public class ApplicationRecordController {
 
     @GetMapping(value = "/latest-per-group", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<ApplicationRecordResponse> getLatestApplicationsForEachMedicineGroup(@RequestParam("animalId") Long animalId,
-                                                                                                     @RequestParam("medicineGroupId") Long medicineGroupId) {
+                                                                                               @RequestParam("medicineGroupId") Long medicineGroupId) {
         ApplicationRecordResponse applicationRecords = applicationRecordService.getLatestApplicationsForEachMedicineGroup(animalId, medicineGroupId);
+        return ResponseEntity.ok(applicationRecords);
+    }
+
+    @GetMapping(value = "/latest-per-type", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<ApplicationRecordResponse> getLatestApplicationsForEachMedicineType(@RequestParam("animalId") Long animalId,
+                                                                                              @RequestParam("medicineTypeId") Long medicineTypeId) {
+        ApplicationRecordResponse applicationRecords = applicationRecordService.getLatestApplicationsForEachMedicineType(animalId, medicineTypeId);
         return ResponseEntity.ok(applicationRecords);
     }
 }

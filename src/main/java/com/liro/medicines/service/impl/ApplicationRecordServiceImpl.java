@@ -97,10 +97,29 @@ public class ApplicationRecordServiceImpl implements ApplicationRecordService {
         );
     }
 
-
+    @Override
     public ApplicationRecordResponse getLatestApplicationsForEachMedicineGroup(Long animalId, Long medicineGroupId) {
         return applicationRecordMapper.applicationRecordToApplicationRecordResponse(
                 applicationRecordRepository.findTopByAnimalIdAndMedicineMedicineGroupIdOrderByApplicationDateDesc(animalId, medicineGroupId)
                         .orElseThrow(() -> new ResourceNotFoundException("Application not found")));
+    }
+
+    @Override
+    public ApplicationRecordResponse getLatestApplicationsForEachMedicineType(Long animalId, Long medicineTypeId) {
+        return applicationRecordMapper.applicationRecordToApplicationRecordResponse(
+                applicationRecordRepository.findTopByAnimalIdAndMedicineMedicineTypeIdOrderByApplicationDateDesc(animalId, medicineTypeId)
+                        .orElseThrow(() -> new ResourceNotFoundException("Application not found")));
+    }
+
+    @Override
+    public Page<ApplicationRecordResponse> findAllByAnimalIdAndMedicineMedicineGroupId(Pageable pageable, Long animalId, Long medicineGroupId) {
+        return applicationRecordRepository.findAllByAnimalIdAndMedicineMedicineTypeId( animalId, medicineGroupId, pageable)
+                .map(applicationRecordMapper::applicationRecordToApplicationRecordResponse);
+    }
+
+    @Override
+    public Page<ApplicationRecordResponse> findAllByAnimalIdAndMedicineMedicineTypeId(Pageable pageable, Long animalId, Long medicineTypeId) {
+        return applicationRecordRepository.findAllByAnimalIdAndMedicineMedicineGroupId( animalId, medicineTypeId, pageable)
+                .map(applicationRecordMapper::applicationRecordToApplicationRecordResponse);
     }
 }
