@@ -113,13 +113,13 @@ public class ApplicationRecordServiceImpl implements ApplicationRecordService {
 
     @Override
     public Page<ApplicationRecordResponse> findAllByAnimalIdAndMedicineMedicineGroupId(Pageable pageable, Long animalId, Long medicineGroupId) {
-        return applicationRecordRepository.findAllByAnimalIdAndMedicineMedicineTypeId( animalId, medicineGroupId, pageable)
+        return applicationRecordRepository.findAllByAnimalIdAndMedicineMedicineGroupId( animalId, medicineGroupId, pageable)
                 .map(applicationRecordMapper::applicationRecordToApplicationRecordResponse);
     }
 
     @Override
     public Page<ApplicationRecordResponse> findAllByAnimalIdAndMedicineMedicineTypeId(Pageable pageable, Long animalId, Long medicineTypeId) {
-        return applicationRecordRepository.findAllByAnimalIdAndMedicineMedicineGroupId( animalId, medicineTypeId, pageable)
+        return applicationRecordRepository.findAllByAnimalIdAndMedicineMedicineTypeId(animalId, medicineTypeId, pageable)
                 .map(applicationRecordMapper::applicationRecordToApplicationRecordResponse);
     }
 }
