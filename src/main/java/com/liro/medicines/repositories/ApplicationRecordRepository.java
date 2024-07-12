@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ApplicationRecordRepository extends JpaRepository<ApplicationRecord, Long> {
@@ -27,5 +28,5 @@ public interface ApplicationRecordRepository extends JpaRepository<ApplicationRe
     List<ApplicationRecord> findLatestApplicationsForEachMedicineGroupByAnimalAndType(@Param("animalId") Long animalId,
                                                                                       @Param("medicineTypeId") Long medicineTypeId);
 
-    ApplicationRecord findTopByMedicineMedicineGroupIdAndAnimalIdOrderByApplicationDate(Long animalId, Long medicineGroupId);
+    Optional<ApplicationRecord> findTopByMedicineMedicineGroupIdAndAnimalIdOrderByApplicationDate(Long animalId, Long medicineGroupId);
 }
