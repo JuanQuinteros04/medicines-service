@@ -35,8 +35,9 @@ public class ApplicationRecordController {
     @GetMapping(value = "/getAll", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Page<ApplicationRecordResponse>> getAll(Pageable pageable,
                                                                   @RequestParam("animalId") Long animalId,
-                                                                  @RequestParam("medicineGroupId") Long medicineGroupId,
-                                                                  @RequestParam("medicineTypeId") Long medicineTypeId) {
+                                                                  @RequestParam(name = "medicineGroupId", required = false) Long medicineGroupId,
+                                                                  @RequestParam(name = "medicineTypeId", required = false) Long medicineTypeId,
+                                                                  @RequestHeader(name = "Authorization", required = false) String token) {
         if(medicineGroupId != null){
             return ResponseEntity.ok(applicationRecordService.findAllByAnimalIdAndMedicineMedicineGroupId(pageable, animalId, medicineGroupId));
         } else if (medicineTypeId != null) {
