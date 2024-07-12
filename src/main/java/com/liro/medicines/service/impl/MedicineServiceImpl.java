@@ -81,8 +81,7 @@ public class MedicineServiceImpl implements MedicineService {
         MedicineType medicineType = medicineTypeRepository.findById(medicineDTO.getMedicineTypeId())
                 .orElseThrow(() -> new ResourceNotFoundException("MedicineType not found with id: " + medicineDTO.getMedicineTypeId()));
 
-        MedicineGroup medicineGroup = medicineGroupRepository.findById(medicineDTO.getMedicineGroupId())
-                .orElseThrow(() -> new ResourceNotFoundException("MedicineGroup not found with id: " + medicineDTO.getMedicineGroupId()));
+
 
         Presentation presentation = presentationRepository.findById(medicineDTO.getPresentationId())
                 .orElseThrow(() -> new ResourceNotFoundException("Presentation not found with id: " + medicineDTO.getPresentationId()));
@@ -94,12 +93,17 @@ public class MedicineServiceImpl implements MedicineService {
 
         Medicine medicine = medicineMapper.medicineDtoToMedicine(medicineDTO);
 
+        if(medicineDTO.getMedicineGroupId() != null){
+            MedicineGroup medicineGroup = medicineGroupRepository.findById(medicineDTO.getMedicineGroupId())
+                    .orElseThrow(() -> new ResourceNotFoundException("MedicineGroup not found with id: " + medicineDTO.getMedicineGroupId()));
+            medicine.setMedicineGroup(medicineGroup);
+
+        }
 
         if (brand.getMedicines() == null) brand.setMedicines(new HashSet<>());
         brand.getMedicines().add(medicine);
         medicine.setBrand(brand);
 
-        medicine.setMedicineGroup(medicineGroup);
         medicine.setMedicineType(medicineType);
         medicine.setPresentation(presentation);
         medicine.setComponents(components);
