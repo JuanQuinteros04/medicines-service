@@ -24,7 +24,7 @@ public class ApplicationRecord {
     private boolean valid;
     private String details;
 
-    @Min(value = 0, message = "The minimum value is 0!")
+//    @Min(value = 0, message = "The minimum value is 0!")
     private Long quantity;
 
     private String lote;
