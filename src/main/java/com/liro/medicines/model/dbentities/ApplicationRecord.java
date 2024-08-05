@@ -3,6 +3,7 @@ package com.liro.medicines.model.dbentities;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import java.time.LocalDate;
 
 @Entity
@@ -22,7 +23,10 @@ public class ApplicationRecord {
     private Long  vetProfileId;
     private boolean valid;
     private String details;
+
+    @Min(value = 0, message = "The minimum value is 0!")
     private Long quantity;
+
     private String lote;
     private LocalDate applicationDate;
     private LocalDate endDate;

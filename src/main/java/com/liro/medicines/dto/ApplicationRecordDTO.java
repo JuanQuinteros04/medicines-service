@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.Min;
 import java.time.LocalDate;
 
 @NoArgsConstructor
@@ -18,7 +19,10 @@ public class ApplicationRecordDTO {
 
     private Long animalId;
     private String details;
+
+    @Min(value = 0, message = "The minimum value is 0!")
     private Long quantity;
+
     private String lote;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     private LocalDate applicationDate;
