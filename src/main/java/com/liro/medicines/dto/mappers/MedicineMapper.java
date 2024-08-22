@@ -14,11 +14,7 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring")
 public interface MedicineMapper {
 
-    @Mapping(target = "brandId", source = "brand.id")
-    @Mapping(target = "medicineTypeId", source = "medicineType.id")
-    @Mapping(target = "medicineGroupId", source = "medicineGroup.id")
-    @Mapping(target = "presentationId", source = "presentation.id")
-    @Mapping(target = "components", source = "components")
+
     MedicineResponse medicineToMedicineResponse(Medicine medicine);
 
     @Mapping(target = "presentation", ignore = true)
@@ -26,6 +22,7 @@ public interface MedicineMapper {
     @Mapping(target = "medicineType", ignore = true)
     @Mapping(target = "medicineGroup", ignore = true)
     @Mapping(target = "components", ignore = true)
+
     Medicine medicineDtoToMedicine(MedicineDTO medicineDTO);
 
     default List<Long> mapComponentsToIds(Set<Component> components) {

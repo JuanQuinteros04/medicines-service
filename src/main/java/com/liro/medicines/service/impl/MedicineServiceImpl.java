@@ -6,6 +6,7 @@ import com.liro.medicines.dto.mappers.MedicineMapper;
 import com.liro.medicines.dto.responses.MedicineResponse;
 import com.liro.medicines.exceptions.ResourceNotFoundException;
 import com.liro.medicines.model.dbentities.*;
+import com.liro.medicines.model.enums.AnimalType;
 import com.liro.medicines.repositories.*;
 import com.liro.medicines.service.MedicineService;
 import org.springframework.data.domain.Page;
@@ -59,11 +60,20 @@ public class MedicineServiceImpl implements MedicineService {
     }
 
     @Override
-    public Page<MedicineResponse> findAllByCommercialNameContaining(String nameContaining, Pageable pageable) {
+    public Page<MedicineResponse> findAllByCommercialNameContaining(String nameContaining, AnimalType animalType, Pageable pageable) {
         nameContaining = nameContaining.toLowerCase();
+        Page<Medicine> medicines;
 
-        return medicineRepository.findAllByCommercialNameContaining(nameContaining, pageable)
-                .map(medicineMapper::medicineToMedicineResponse);
+
+        if(animalType != null){
+            medicines =  medicineRepository.findAllByCommercialNameContainingAndAnimalType(nameContaining, animalType, pageable);
+        }
+        else{
+            medicines =  medicineRepository.findAllByCommercialNameContaining(nameContaining, pageable);
+        }
+
+        return medicines.map(medicineMapper::medicineToMedicineResponse);
+
     }
 
     @Override
