@@ -9,6 +9,15 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
+import com.liro.medicines.model.enums.AnimalType;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
@@ -27,10 +36,11 @@ public class MedicineResponse {
     private String dosesUnity;
     private AnimalType animalType;
 
-    private Long brandId;
-    private Long medicineTypeId;
-    private Long medicineGroupId;
-    private Long presentationId;
+    private BrandResponse brand;
+    private MedicineTypeResponse medicineType;
+    private MedicineGroupResponse medicineGroupId;
+    private PresentationResponse presentation;
 
-    private List<Long> components;
+    private List<ComponentResponse> components;
 }
+
