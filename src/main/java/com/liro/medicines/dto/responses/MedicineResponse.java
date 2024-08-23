@@ -29,7 +29,7 @@ public class MedicineResponse {
 
     private BrandResponse brand;
     private MedicineTypeResponse medicineType;
-    private MedicineGroupResponse medicineGroupId;
+    private MedicineGroupResponse medicineGroup;
     private PresentationResponse presentation;
 
     private List<ComponentResponse> components;
