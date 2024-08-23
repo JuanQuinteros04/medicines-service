@@ -9,15 +9,6 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
-import com.liro.medicines.model.enums.AnimalType;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
-
-import java.util.List;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder

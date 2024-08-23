@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 public interface MedicineMapper {
 
 
+    @Mapping(target = "medicineGroupId", source = "medicine.id")
     MedicineResponse medicineToMedicineResponse(Medicine medicine);
 
     @Mapping(target = "presentation", ignore = true)
