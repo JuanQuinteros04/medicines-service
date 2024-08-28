@@ -28,6 +28,8 @@ public class ApplicationRecord {
     private Long quantity;
 
     private String lote;
+    private String controlNumber;
+    private String serieNumber;
     private LocalDate applicationDate;
     private LocalDate endDate;
 

@@ -24,6 +24,8 @@ public class ApplicationRecordDTO {
     private Long quantity;
 
     private String lote;
+    private String controlNumber;
+    private String serieNumber;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     private LocalDate applicationDate;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
