@@ -13,7 +13,6 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface ApplicationRecordMapper {
 
-    @Mapping(target = "medicineId", source = "medicine.id")
     ApplicationRecordResponse applicationRecordToApplicationRecordResponse(ApplicationRecord applicationRecord);
 
     @Mapping(target = "medicine", ignore = true)
