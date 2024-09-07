@@ -1,5 +1,7 @@
 package com.liro.medicines.dto;
 
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.liro.medicines.model.enums.AnimalType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,4 +35,8 @@ public class MedicineDTO {
 
     private List<Long> components;
 
+    @JsonSetter(nulls = Nulls.AS_EMPTY)
+    public void setComponents(List<Long> components) {
+        this.components = components;
+    }
 }

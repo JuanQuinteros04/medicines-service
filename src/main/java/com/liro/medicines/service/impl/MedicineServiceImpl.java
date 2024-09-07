@@ -96,6 +96,7 @@ public class MedicineServiceImpl implements MedicineService {
         Presentation presentation = presentationRepository.findById(medicineDTO.getPresentationId())
                 .orElseThrow(() -> new ResourceNotFoundException("Presentation not found with id: " + medicineDTO.getPresentationId()));
 
+
         HashSet<Component> components = (HashSet<Component>) medicineDTO.getComponents().stream()
                 .map(component -> componentRepository.findById(component)
                         .orElseThrow(() -> new ResourceNotFoundException("Component not found with id: " + component)))
