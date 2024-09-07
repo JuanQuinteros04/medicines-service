@@ -33,11 +33,6 @@ public class MedicineDTO {
     private Long medicineTypeId;
     private Long medicineGroupId;
     private Long presentationId;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<Long> components;
 
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
-    public void setComponents(List<Long> components) {
-        this.components = components;
-    }
 }

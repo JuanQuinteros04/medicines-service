@@ -97,10 +97,7 @@ public class MedicineServiceImpl implements MedicineService {
                 .orElseThrow(() -> new ResourceNotFoundException("Presentation not found with id: " + medicineDTO.getPresentationId()));
 
 
-        HashSet<Component> components = (HashSet<Component>) medicineDTO.getComponents().stream()
-                .map(component -> componentRepository.findById(component)
-                        .orElseThrow(() -> new ResourceNotFoundException("Component not found with id: " + component)))
-                .collect(Collectors.toSet());
+
 
         Medicine medicine = medicineMapper.medicineDtoToMedicine(medicineDTO);
 
@@ -111,13 +108,21 @@ public class MedicineServiceImpl implements MedicineService {
 
         }
 
+        if(medicineDTO.getComponents() != null){
+            HashSet<Component> components = (HashSet<Component>) medicineDTO.getComponents().stream()
+                    .map(component -> componentRepository.findById(component)
+                            .orElseThrow(() -> new ResourceNotFoundException("Component not found with id: " + component)))
+                    .collect(Collectors.toSet());
+            medicine.setComponents(components);
+
+        }
+
         if (brand.getMedicines() == null) brand.setMedicines(new HashSet<>());
         brand.getMedicines().add(medicine);
         medicine.setBrand(brand);
 
         medicine.setMedicineType(medicineType);
         medicine.setPresentation(presentation);
-        medicine.setComponents(components);
 
         return medicineMapper.medicineToMedicineResponse(
                 medicineRepository.save(medicine)
