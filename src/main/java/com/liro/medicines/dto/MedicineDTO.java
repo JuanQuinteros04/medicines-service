@@ -1,5 +1,6 @@
 package com.liro.medicines.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.liro.medicines.model.enums.AnimalType;
@@ -32,7 +33,7 @@ public class MedicineDTO {
     private Long medicineTypeId;
     private Long medicineGroupId;
     private Long presentationId;
-
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<Long> components;
 
     @JsonSetter(nulls = Nulls.AS_EMPTY)
