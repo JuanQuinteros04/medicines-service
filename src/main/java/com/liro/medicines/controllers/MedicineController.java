@@ -3,6 +3,7 @@ package com.liro.medicines.controllers;
 import com.liro.medicines.dto.ApiResponse;
 import com.liro.medicines.dto.MedicineDTO;
 import com.liro.medicines.dto.responses.MedicineResponse;
+import com.liro.medicines.model.dbentities.MedicineType;
 import com.liro.medicines.model.enums.AnimalType;
 import com.liro.medicines.service.MedicineService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,10 +39,11 @@ public class MedicineController {
     }
 
     @GetMapping(value = "/getByCommercialNameContaining", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Page<MedicineResponse>> getByNameContaining(
+    public ResponseEntity<Page<MedicineResponse>> getByNameContainingAndMedicineType(
             @RequestParam(required = false) AnimalType animalType,
-            @RequestParam("commercialNameContaining") String nameContaining, Pageable pageable) {
-        return ResponseEntity.ok(medicineService.findAllByCommercialNameContaining(nameContaining, animalType, pageable));
+            @RequestParam("commercialNameContaining") String nameContaining, Pageable pageable,
+            @RequestParam(required = false) MedicineType medicineType) {
+    return ResponseEntity.ok(medicineService.findAllByCommercialNameContainingAndMedicineType(nameContaining, animalType, medicineType, pageable));
     }
 
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
