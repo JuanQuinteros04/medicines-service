@@ -60,13 +60,13 @@ public class MedicineServiceImpl implements MedicineService {
     }
 
     @Override
-    public Page<MedicineResponse> findAllByCommercialNameContainingAndMedicineType(String nameContaining, AnimalType animalType,MedicineType medicineType, Pageable pageable) {
+    public Page<MedicineResponse> findAllByCommercialNameContainingAndMedicineType(String nameContaining, AnimalType animalType,Long medicineTypeId, Pageable pageable) {
         nameContaining = nameContaining.toLowerCase();
         Page<Medicine> medicines;
 
 
-        if(animalType != null && medicineType != null ){
-            medicines =  medicineRepository.findAllByCommercialNameContainingAndAnimalTypeAndMedicineType(nameContaining, animalType,medicineType, pageable);
+        if(animalType != null && medicineTypeId != null ){
+            medicines =  medicineRepository.findAllByCommercialNameContainingAndAnimalTypeAndMedicineType(nameContaining, animalType,medicineTypeId, pageable);
         } else if (animalType != null) {
             medicines =  medicineRepository.findAllByCommercialNameContainingAndAnimalType(nameContaining, animalType, pageable);
         }else
