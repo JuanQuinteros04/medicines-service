@@ -60,7 +60,7 @@ public class MedicineServiceImpl implements MedicineService {
     }
 
     @Override
-    public Page<MedicineResponse> findAllByCommercialNameContainingAndMedicineType(String nameContaining, AnimalType animalType,Long medicineTypeId, Pageable pageable) {
+    public Page<MedicineResponse> findAllByCommercialNameContainingAndMedicineTypeId(String nameContaining, AnimalType animalType,Long medicineTypeId, Pageable pageable) {
         nameContaining = nameContaining.toLowerCase();
         Page<Medicine> medicines;
 

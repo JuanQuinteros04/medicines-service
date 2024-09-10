@@ -43,7 +43,7 @@ public class MedicineController {
             @RequestParam(required = false) AnimalType animalType,
             @RequestParam("commercialNameContaining") String nameContaining, Pageable pageable,
             @RequestParam(required = false) Long medicineTypeId) {
-    return ResponseEntity.ok(medicineService.findAllByCommercialNameContainingAndMedicineType(nameContaining, animalType, medicineTypeId, pageable));
+    return ResponseEntity.ok(medicineService.findAllByCommercialNameContainingAndMedicineTypeId(nameContaining, animalType, medicineTypeId, pageable));
     }
 
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE})

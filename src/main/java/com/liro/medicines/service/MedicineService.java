@@ -13,7 +13,7 @@ public interface MedicineService {
 
     MedicineResponse findById(Long medicineId);
 
-    Page<MedicineResponse> findAllByCommercialNameContainingAndMedicineType(String nameContaining, AnimalType animalType, Long medicineTypeId, Pageable pageable);
+    Page<MedicineResponse> findAllByCommercialNameContainingAndMedicineTypeId(String nameContaining, AnimalType animalType, Long medicineTypeId, Pageable pageable);
 
     MedicineResponse createMedicine(MedicineDTO medicineDTO);
 
