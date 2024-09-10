@@ -13,7 +13,7 @@ public interface MedicineRepository extends JpaRepository<Medicine, Long> {
 
     Page<Medicine> findAllByCommercialNameContainingAndAnimalType(String nameContaining, AnimalType animalType, Pageable pageable);
 
-    Page<Medicine> findAllByCommercialNameContainingAndAnimalTypeAndMedicineType(String nameContaining, AnimalType animalType, Long medicineTypeId, Pageable pageable);
+    Page<Medicine> findAllByCommercialNameContainingAndAnimalTypeAndMedicineTypeId(String nameContaining, AnimalType animalType, Long medicineTypeId, Pageable pageable);
 
 
     Page<Medicine> findAllByCommercialNameContaining(String nameContaining, Pageable pageable);
