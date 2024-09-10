@@ -66,7 +66,7 @@ public class MedicineServiceImpl implements MedicineService {
 
 
         if(animalType != null && medicineTypeId != null ){
-            medicines =  medicineRepository.findAllByCommercialNameContainingAndAnimalTypeAndMedicineType(nameContaining, animalType,medicineTypeId, pageable);
+            medicines =  medicineRepository.findAllByCommercialNameContainingAndAnimalTypeAndMedicineTypeId(nameContaining, animalType,medicineTypeId, pageable);
         } else if (animalType != null) {
             medicines =  medicineRepository.findAllByCommercialNameContainingAndAnimalType(nameContaining, animalType, pageable);
         }else
