@@ -1,7 +1,6 @@
 package com.liro.medicines.service.impl;
 
 import com.liro.medicines.dto.MedicineDTO;
-import com.liro.medicines.dto.MedicineGroupDTO;
 import com.liro.medicines.dto.mappers.MedicineMapper;
 import com.liro.medicines.dto.responses.MedicineResponse;
 import com.liro.medicines.exceptions.ResourceNotFoundException;
