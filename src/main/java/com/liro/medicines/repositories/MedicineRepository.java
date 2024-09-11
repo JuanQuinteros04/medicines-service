@@ -8,15 +8,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface MedicineRepository extends JpaRepository<Medicine, Long> {
 
-    Page<Medicine> findAllByCommercialNameContainingAndAnimalType(String nameContaining, AnimalType animalType, Pageable pageable);
 
-    Page<Medicine> findAllByCommercialNameContainingAndAnimalTypeAndMedicineTypeId(String nameContaining, AnimalType animalType, Long medicineTypeId, Pageable pageable);
+        Page<Medicine> findAllByCommercialNameContaining(String nameContaining, Pageable pageable);
 
-
-    Page<Medicine> findAllByCommercialNameContaining(String nameContaining, Pageable pageable);
-
+        Page<Medicine> findAllByCommercialNameContainingAndAnimalTypeInAndMedicineTypeId(String nameContaining, List<AnimalType> animalTypes, Long medicineId, Pageable pageable);
+        Page<Medicine> findAllByCommercialNameContainingAndAnimalTypeIn(String nameContaining, List<AnimalType> animalTypes, Pageable pageable);
 
 }

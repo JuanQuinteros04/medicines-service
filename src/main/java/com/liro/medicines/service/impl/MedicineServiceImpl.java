@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.stream.Collectors;
 
 
@@ -64,15 +65,19 @@ public class MedicineServiceImpl implements MedicineService {
         nameContaining = nameContaining.toLowerCase();
         Page<Medicine> medicines;
 
+        List<AnimalType> animalTypes = (animalType == null || animalType == AnimalType.ALL_TYPE)
+                ? List.of(AnimalType.ALL_TYPE)
+                : List.of(animalType, AnimalType.ALL_TYPE);
 
-        if(animalType != null && medicineTypeId != null ){
-            medicines =  medicineRepository.findAllByCommercialNameContainingAndAnimalTypeAndMedicineTypeId(nameContaining, animalType,medicineTypeId, pageable);
-        } else if (animalType != null) {
-            medicines =  medicineRepository.findAllByCommercialNameContainingAndAnimalType(nameContaining, animalType, pageable);
-        }else
-            medicines =  medicineRepository.findAllByCommercialNameContaining(nameContaining, pageable);
+        if (medicineTypeId != null) {
+            medicines = medicineRepository.findAllByCommercialNameContainingAndAnimalTypeInAndMedicineTypeId(nameContaining, animalTypes, medicineTypeId, pageable);
+            return medicines.map(medicineMapper::medicineToMedicineResponse);
+        } else {
+            medicines = medicineRepository.findAllByCommercialNameContainingAndAnimalTypeIn(nameContaining, animalTypes, pageable);
+            return medicines.map(medicineMapper::medicineToMedicineResponse);
+        }
 
-        return medicines.map(medicineMapper::medicineToMedicineResponse);
+
 
     }
 
