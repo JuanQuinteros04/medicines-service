@@ -1,18 +1,17 @@
 package com.liro.medicines.repositories;
 
 import com.liro.medicines.model.dbentities.Medicine;
+import com.liro.medicines.model.dbentities.MedicineType;
 import com.liro.medicines.model.enums.AnimalType;
 import org.springframework.data.jpa.domain.Specification;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+
+import javax.persistence.criteria.*;
 
 public class MedicineSpecifications {
 
     public static Specification<Medicine> getMedicines(String nameContaining, AnimalType animalType, Long medicineTypeId) {
         return (Root<Medicine> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) -> {
-            Predicate predicate = criteriaBuilder.conjunction(); // Start with an always-true predicate
+            Predicate predicate = criteriaBuilder.conjunction();
 
             // Filtro por nombre
             if (nameContaining != null && !nameContaining.isEmpty()) {
@@ -34,7 +33,8 @@ public class MedicineSpecifications {
 
             // Filtro por medicineTypeId
             if (medicineTypeId != null) {
-                predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(root.get("medicineTypeId"), medicineTypeId));
+                Join<Medicine, MedicineType> medicineMedicineTypeJoin = root.join("medicineType");
+                predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(medicineMedicineTypeJoin.get("id"), medicineTypeId));
             }
 
             return predicate;
