@@ -67,7 +67,7 @@ public class MedicineServiceImpl implements MedicineService {
         Page<Medicine> medicines;
 
         Specification<Medicine> spec = MedicineSpecifications.getMedicines(nameContaining, animalType, medicineTypeId);
-        medicines = medicineRepository.findAllByCommercialNameContaining(spec, pageable);
+        medicines = medicineRepository.findAll(spec, pageable);
         return medicines.map(medicineMapper::medicineToMedicineResponse);
     }
 
