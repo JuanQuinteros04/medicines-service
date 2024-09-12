@@ -10,7 +10,9 @@ import com.liro.medicines.repositories.*;
 import com.liro.medicines.service.MedicineService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.HashSet;
 import java.util.List;
@@ -64,20 +66,9 @@ public class MedicineServiceImpl implements MedicineService {
         nameContaining = nameContaining.toLowerCase();
         Page<Medicine> medicines;
 
-        List<AnimalType> animalTypes = (animalType == null || animalType == AnimalType.ALL_TYPE)
-                ? List.of(AnimalType.ALL_TYPE)
-                : List.of(animalType, AnimalType.ALL_TYPE);
-
-        if (medicineTypeId != null) {
-            medicines = medicineRepository.findAllByCommercialNameContainingAndAnimalTypeInAndMedicineTypeId(nameContaining, animalTypes, medicineTypeId, pageable);
-            return medicines.map(medicineMapper::medicineToMedicineResponse);
-        } else {
-            medicines = medicineRepository.findAllByCommercialNameContainingAndAnimalTypeIn(nameContaining, animalTypes, pageable);
-            return medicines.map(medicineMapper::medicineToMedicineResponse);
-        }
-
-
-
+        Specification<Medicine> spec = MedicineSpecifications.getMedicines(nameContaining, animalType, medicineTypeId);
+        medicines = medicineRepository.findAllByCommercialNameContaining(spec, pageable);
+        return medicines.map(medicineMapper::medicineToMedicineResponse);
     }
 
     @Override
