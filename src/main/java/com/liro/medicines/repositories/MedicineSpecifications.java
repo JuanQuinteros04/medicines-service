@@ -16,7 +16,7 @@ public class MedicineSpecifications {
 
             // Filtro por nombre
             if (nameContaining != null && !nameContaining.isEmpty()) {
-                predicate = criteriaBuilder.and(predicate, criteriaBuilder.like(root.get("name"), "%" + nameContaining + "%"));
+                predicate = criteriaBuilder.and(predicate, criteriaBuilder.like(root.get("commercialName"), "%" + nameContaining + "%"));
             }
 
             // Si animalType no es nulo
