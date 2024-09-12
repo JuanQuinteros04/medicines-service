@@ -16,6 +16,6 @@ import java.util.List;
 public interface MedicineRepository extends JpaRepository<Medicine, Long> {
 
 
-        Page<Medicine> findAllByCommercialNameContaining(@Nullable Specification<Medicine> specifications, Pageable pageable);
+        Page<Medicine> findAll(@Nullable Specification<Medicine> specifications, Pageable pageable);
 
 }
