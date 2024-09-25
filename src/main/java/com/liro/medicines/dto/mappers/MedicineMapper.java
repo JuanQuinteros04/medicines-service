@@ -20,6 +20,7 @@ public interface MedicineMapper {
     @Mapping(target = "presentation", ignore = true)
     @Mapping(target = "brand", ignore = true)
     @Mapping(target = "medicineType", ignore = true)
+    @Mapping(target = "medicineGroups", ignore = true)
     @Mapping(target = "components", ignore = true)
 
     Medicine medicineDtoToMedicine(MedicineDTO medicineDTO);
