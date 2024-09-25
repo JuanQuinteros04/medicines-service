@@ -172,8 +172,17 @@ public class MedicineServiceImpl implements MedicineService {
 
             if(medicineDTO.getMedicineGroups() != null){
                 List<MedicineGroup> medicineGroups = medicineDTO.getMedicineGroups().stream()
-                        .map(medicineGroup -> medicineGroupRepository.findByName(medicineGroup)
-                                .orElse(medicineGroupRepository.save(MedicineGroup.builder().name(medicineGroup).build())))
+                        .map(medicineGroup -> {
+
+                            String normalizedMedicineGrouo = medicineGroup.toLowerCase().trim();
+                            Optional<MedicineGroup> optionalMedicineGroup = medicineGroupRepository.findByName(normalizedMedicineGrouo);
+
+                            return optionalMedicineGroup.orElseGet(() -> medicineGroupRepository.save(
+                                    MedicineGroup.builder()
+                                            .name(normalizedMedicineGrouo)
+                                            .build()
+                            ));
+                        })
                         .collect(Collectors.toList());
 
                 medicine.setMedicineGroups(medicineGroups);
