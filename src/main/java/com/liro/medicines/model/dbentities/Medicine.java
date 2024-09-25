@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -41,9 +42,13 @@ public class Medicine {
     @JoinColumn(name = "medicine_type_id")
     private MedicineType medicineType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "medicine_group_id")
-    private MedicineGroup medicineGroup;
+    @ManyToMany
+    @JoinTable(
+            name = "medicines_groups",
+            joinColumns = @JoinColumn(name = "medicine_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id")
+    )
+    private List<MedicineGroup> medicineGroups;
 
     @ManyToMany
     @JoinTable(
