@@ -158,9 +158,14 @@ public class MedicineServiceImpl implements MedicineService {
             ));
 
 
+            String normalizedPresentationName = medicineDTO.getBrandName().toLowerCase().trim();
+            Optional<Presentation> optionalPresentation = presentationRepository.findByName(normalizedBrandName);
 
-            Presentation presentation = presentationRepository.findByName(medicineDTO.getPresentationName())
-                    .orElse(presentationRepository.save(Presentation.builder().name(medicineDTO.getPresentationName()).build()));
+             Presentation presentation = optionalPresentation.orElseGet(() -> presentationRepository.save(
+                    Presentation.builder()
+                            .name(normalizedPresentationName)
+                            .build()
+            ));
 
 
             Medicine medicine = medicineMapper.medicineDtoMigratorToMedicine(medicineDTO);
