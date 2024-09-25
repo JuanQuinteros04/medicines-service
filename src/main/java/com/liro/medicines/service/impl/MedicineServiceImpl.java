@@ -158,7 +158,7 @@ public class MedicineServiceImpl implements MedicineService {
             ));
 
 
-            String normalizedPresentationName = medicineDTO.getBrandName().toLowerCase().trim();
+            String normalizedPresentationName = medicineDTO.getPresentationName().toLowerCase().trim();
             Optional<Presentation> optionalPresentation = presentationRepository.findByName(normalizedBrandName);
 
              Presentation presentation = optionalPresentation.orElseGet(() -> presentationRepository.save(
