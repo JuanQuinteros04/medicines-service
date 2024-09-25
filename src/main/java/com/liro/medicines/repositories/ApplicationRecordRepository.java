@@ -16,11 +16,11 @@ import java.util.Optional;
 public interface ApplicationRecordRepository extends JpaRepository<ApplicationRecord, Long> {
 
 
-    Optional<ApplicationRecord> findTopByAnimalIdAndMedicineMedicineGroupIdOrderByApplicationDateDesc(Long animalId, Long medicineGroupId);
+    Optional<ApplicationRecord> findTopByAnimalIdAndMedicine_MedicineGroups_IdOrderByApplicationDateDesc(Long animalId, Long medicineGroupId);
 
     Optional<ApplicationRecord> findTopByAnimalIdAndMedicineMedicineTypeIdOrderByApplicationDateDesc(Long animalId, Long medicineTypeId);
 
-    Page<ApplicationRecord> findAllByAnimalIdAndMedicineMedicineGroupId(Long animalId, Long medicineGroupId, Pageable pageable);
+    Page<ApplicationRecord> findAllByAnimalIdAndMedicine_MedicineGroups_Id(Long animalId, Long medicineGroupId, Pageable pageable);
 
     Page<ApplicationRecord> findAllByAnimalIdAndMedicineMedicineTypeId(Long animalId, Long medicineTypeId, Pageable pageable);
 
