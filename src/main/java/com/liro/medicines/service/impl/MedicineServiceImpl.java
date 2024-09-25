@@ -1,6 +1,7 @@
 package com.liro.medicines.service.impl;
 
 import com.liro.medicines.dto.MedicineDTO;
+import com.liro.medicines.dto.MedicineDTOMigrator;
 import com.liro.medicines.dto.mappers.MedicineMapper;
 import com.liro.medicines.dto.responses.MedicineResponse;
 import com.liro.medicines.exceptions.ResourceNotFoundException;
@@ -125,5 +126,57 @@ public class MedicineServiceImpl implements MedicineService {
         return medicineMapper.medicineToMedicineResponse(
                 medicineRepository.save(medicine)
         );
+    }
+
+    @Override
+    public void migrateMedicines(List<MedicineDTOMigrator> medicineDTOMigratorList) {
+
+
+        medicineDTOMigratorList.forEach(medicineDTO -> {
+
+            if (medicineDTO.getCommercialName() != null) {
+                medicineDTO.setCommercialName(medicineDTO.getCommercialName().toLowerCase());
+            }
+            if (medicineDTO.getFormalName() != null) {
+                medicineDTO.setFormalName(medicineDTO.getFormalName().toLowerCase());
+            }
+
+            MedicineType medicineType = medicineTypeRepository.findById(medicineDTO.getMedicineTypeId())
+                    .orElseThrow(() -> new ResourceNotFoundException("MedicineType not found with id: " + medicineDTO.getMedicineTypeId()));
+
+
+
+            Brand brand = brandRepository.findByName(medicineDTO.getBrandName())
+                    .orElse(brandRepository.save(Brand.builder().name(medicineDTO.getBrandName())
+                            .commercialName(medicineDTO.getBrandName()).build()));
+
+
+
+            Presentation presentation = presentationRepository.findByName(medicineDTO.getPresentationName())
+                    .orElse(presentationRepository.save(Presentation.builder().name(medicineDTO.getPresentationName()).build()));
+
+
+            Medicine medicine = medicineMapper.medicineDtoMigratorToMedicine(medicineDTO);
+
+            if(medicineDTO.getMedicineGroups() != null){
+                List<MedicineGroup> medicineGroups = medicineDTO.getMedicineGroups().stream()
+                        .map(medicineGroup -> medicineGroupRepository.findByName(medicineGroup)
+                                .orElse(medicineGroupRepository.save(MedicineGroup.builder().name(medicineGroup).build())))
+                        .collect(Collectors.toList());
+
+                medicine.setMedicineGroups(medicineGroups);
+
+            }
+
+            if (brand.getMedicines() == null) brand.setMedicines(new HashSet<>());
+            brand.getMedicines().add(medicine);
+            medicine.setBrand(brand);
+
+            medicine.setMedicineType(medicineType);
+            medicine.setPresentation(presentation);
+
+             medicineMapper.medicineToMedicineResponse(
+                    medicineRepository.save(medicine));
+        });
     }
 }

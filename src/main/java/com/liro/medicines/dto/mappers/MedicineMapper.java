@@ -1,6 +1,7 @@
 package com.liro.medicines.dto.mappers;
 
 import com.liro.medicines.dto.MedicineDTO;
+import com.liro.medicines.dto.MedicineDTOMigrator;
 import com.liro.medicines.dto.responses.MedicineResponse;
 import com.liro.medicines.model.dbentities.Component;
 import com.liro.medicines.model.dbentities.Medicine;
@@ -22,8 +23,15 @@ public interface MedicineMapper {
     @Mapping(target = "medicineType", ignore = true)
     @Mapping(target = "medicineGroups", ignore = true)
     @Mapping(target = "components", ignore = true)
-
     Medicine medicineDtoToMedicine(MedicineDTO medicineDTO);
+
+
+    @Mapping(target = "presentation", ignore = true)
+    @Mapping(target = "brand", ignore = true)
+    @Mapping(target = "medicineType", ignore = true)
+    @Mapping(target = "medicineGroups", ignore = true)
+    @Mapping(target = "components", ignore = true)
+    Medicine medicineDtoMigratorToMedicine(MedicineDTOMigrator medicineDTO);
 
     default List<Long> mapComponentsToIds(Set<Component> components) {
         return components.stream()

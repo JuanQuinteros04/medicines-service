@@ -2,6 +2,7 @@ package com.liro.medicines.controllers;
 
 import com.liro.medicines.dto.ApiResponse;
 import com.liro.medicines.dto.MedicineDTO;
+import com.liro.medicines.dto.MedicineDTOMigrator;
 import com.liro.medicines.dto.responses.MedicineResponse;
 import com.liro.medicines.model.dbentities.MedicineType;
 import com.liro.medicines.model.enums.AnimalType;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/medicines")
@@ -58,4 +60,12 @@ public class MedicineController {
                 new ApiResponse(true, "Medicine created successfully"));
     }
 
+    @PostMapping(value = "/migrate", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<ApiResponse> migrateMedicines(@Valid @RequestBody List<MedicineDTOMigrator> medicineDTOMigrators) {
+
+
+        medicineService.migrateMedicines(medicineDTOMigrators);
+
+        return ResponseEntity.ok().build();
+    }
 }
