@@ -96,10 +96,13 @@ public class MedicineServiceImpl implements MedicineService {
 
         Medicine medicine = medicineMapper.medicineDtoToMedicine(medicineDTO);
 
-        if(medicineDTO.getMedicineGroupId() != null){
-            MedicineGroup medicineGroup = medicineGroupRepository.findById(medicineDTO.getMedicineGroupId())
-                    .orElseThrow(() -> new ResourceNotFoundException("MedicineGroup not found with id: " + medicineDTO.getMedicineGroupId()));
-            medicine.setMedicineGroup(medicineGroup);
+        if(medicineDTO.getMedicineGroups() != null){
+            List<MedicineGroup> medicineGroups = medicineDTO.getMedicineGroups().stream()
+                    .map(medicineGroup -> medicineGroupRepository.findById(medicineGroup)
+                    .orElseThrow(() -> new ResourceNotFoundException("MedicineGroup not found with id: " + medicineGroup)))
+                            .collect(Collectors.toList());
+
+            medicine.setMedicineGroups(medicineGroups);
 
         }
 

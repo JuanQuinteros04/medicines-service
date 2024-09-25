@@ -31,7 +31,7 @@ public class MedicineDTO {
 
     private Long brandId;
     private Long medicineTypeId;
-    private Long medicineGroupId;
+    private List<Long> medicineGroups;
     private Long presentationId;
     private List<Long> components;
 
