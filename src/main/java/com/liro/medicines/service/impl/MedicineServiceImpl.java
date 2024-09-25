@@ -17,6 +17,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -146,9 +147,15 @@ public class MedicineServiceImpl implements MedicineService {
 
 
 
-            Brand brand = brandRepository.findByName(medicineDTO.getBrandName())
-                    .orElse(brandRepository.save(Brand.builder().name(medicineDTO.getBrandName())
-                            .commercialName(medicineDTO.getBrandName()).build()));
+            String normalizedBrandName = medicineDTO.getBrandName().toLowerCase().trim();
+            Optional<Brand> optionalBrand = brandRepository.findByName(normalizedBrandName);
+
+            Brand brand = optionalBrand.orElseGet(() -> brandRepository.save(
+                    Brand.builder()
+                            .name(normalizedBrandName)
+                            .commercialName(normalizedBrandName)
+                            .build()
+            ));
 
 
 

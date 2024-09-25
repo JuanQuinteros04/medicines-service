@@ -19,6 +19,6 @@ public class Presentation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Pastilla, aerosol, comprimido, etc
+    @Column(unique = true)
     private String name;
 }
