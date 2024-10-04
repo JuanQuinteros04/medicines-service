@@ -2,9 +2,8 @@ package com.liro.medicines.controllers;
 
 import com.liro.medicines.dto.ApiResponse;
 import com.liro.medicines.dto.MedicineDTO;
-import com.liro.medicines.dto.MedicineDTOMigrator;
+import com.liro.medicines.dto.migrator.MedicineDTOMigrator;
 import com.liro.medicines.dto.responses.MedicineResponse;
-import com.liro.medicines.model.dbentities.MedicineType;
 import com.liro.medicines.model.enums.AnimalType;
 import com.liro.medicines.service.MedicineService;
 import org.springframework.beans.factory.annotation.Autowired;

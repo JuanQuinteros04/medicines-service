@@ -1,4 +1,4 @@
-package com.liro.medicines.dto;
+package com.liro.medicines.dto.migrator;
 
 import com.liro.medicines.model.enums.AnimalType;
 import lombok.*;

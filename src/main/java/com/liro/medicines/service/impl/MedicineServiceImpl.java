@@ -1,7 +1,7 @@
 package com.liro.medicines.service.impl;
 
 import com.liro.medicines.dto.MedicineDTO;
-import com.liro.medicines.dto.MedicineDTOMigrator;
+import com.liro.medicines.dto.migrator.MedicineDTOMigrator;
 import com.liro.medicines.dto.mappers.MedicineMapper;
 import com.liro.medicines.dto.responses.MedicineResponse;
 import com.liro.medicines.exceptions.ResourceNotFoundException;
@@ -13,7 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.HashSet;
 import java.util.List;

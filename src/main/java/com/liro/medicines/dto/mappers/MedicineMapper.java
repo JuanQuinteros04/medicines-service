@@ -1,7 +1,7 @@
 package com.liro.medicines.dto.mappers;
 
 import com.liro.medicines.dto.MedicineDTO;
-import com.liro.medicines.dto.MedicineDTOMigrator;
+import com.liro.medicines.dto.migrator.MedicineDTOMigrator;
 import com.liro.medicines.dto.responses.MedicineResponse;
 import com.liro.medicines.model.dbentities.Component;
 import com.liro.medicines.model.dbentities.Medicine;

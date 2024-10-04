@@ -1,9 +1,8 @@
 package com.liro.medicines.service;
 
 import com.liro.medicines.dto.MedicineDTO;
-import com.liro.medicines.dto.MedicineDTOMigrator;
+import com.liro.medicines.dto.migrator.MedicineDTOMigrator;
 import com.liro.medicines.dto.responses.MedicineResponse;
-import com.liro.medicines.model.dbentities.MedicineType;
 import com.liro.medicines.model.enums.AnimalType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
