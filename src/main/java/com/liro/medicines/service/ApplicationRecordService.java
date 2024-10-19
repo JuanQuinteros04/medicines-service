@@ -14,7 +14,7 @@ public interface ApplicationRecordService {
 
     ApplicationRecordResponse findById(Long applicationRecordId);
 
-    ApplicationRecordResponse createApplicationRecord(ApplicationRecordDTO applicationRecordDTO, String token);
+    ApplicationRecordResponse createApplicationRecord(ApplicationRecordDTO applicationRecordDTO, String token, Long clinicId);
     ApplicationRecordResponse getLatestApplicationsForEachMedicineGroup(Long animalId, Long medicineTypeId);
     ApplicationRecordResponse getLatestApplicationsForEachMedicineType(Long animalId, Long medicineTypeId);
 

@@ -74,8 +74,8 @@ public class ApplicationRecordServiceImpl implements ApplicationRecordService {
 
 
     @Override
-    public ApplicationRecordResponse createApplicationRecord(ApplicationRecordDTO applicationRecordDTO, String token) {
-        feignAnimalClient.hasPermissions(applicationRecordDTO.getAnimalId(), true, false, true, false, token);
+    public ApplicationRecordResponse createApplicationRecord(ApplicationRecordDTO applicationRecordDTO, String token, Long clinicId) {
+        feignAnimalClient.hasPermissions(applicationRecordDTO.getAnimalId(), false, false, false, clinicId, token);
 
         ApplicationRecord applicationRecord = applicationRecordMapper.applicationRecordDtoToApplicationRecord(applicationRecordDTO);
 
@@ -90,6 +90,7 @@ public class ApplicationRecordServiceImpl implements ApplicationRecordService {
         if (userDTO.getRoles().contains("ROLE_VET")) {
             applicationRecord.setValid(true);
             applicationRecord.setVetProfileId(userDTO.getId());
+            applicationRecord.setVetClinicId(clinicId);
         }
 
         return applicationRecordMapper.applicationRecordToApplicationRecordResponse(
