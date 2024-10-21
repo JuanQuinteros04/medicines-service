@@ -4,6 +4,7 @@ import com.liro.medicines.config.FeignAnimalClient;
 import com.liro.medicines.dto.ApplicationRecordDTO;
 import com.liro.medicines.dto.UserDTO;
 import com.liro.medicines.dto.mappers.ApplicationRecordMapper;
+import com.liro.medicines.dto.migrator.ApplicationRecordDTOMigrator;
 import com.liro.medicines.dto.responses.ApplicationRecordResponse;
 import com.liro.medicines.exceptions.ResourceNotFoundException;
 import com.liro.medicines.model.dbentities.ApplicationRecord;
@@ -96,6 +97,11 @@ public class ApplicationRecordServiceImpl implements ApplicationRecordService {
         return applicationRecordMapper.applicationRecordToApplicationRecordResponse(
                 applicationRecordRepository.save(applicationRecord)
         );
+    }
+
+    @Override
+    public void migrateApplicationRecords(List<ApplicationRecordDTOMigrator> applicationRecordDTOMigrators) {
+
     }
 
     @Override
