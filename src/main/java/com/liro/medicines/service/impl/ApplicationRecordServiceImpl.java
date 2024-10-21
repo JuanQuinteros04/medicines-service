@@ -100,11 +100,28 @@ public class ApplicationRecordServiceImpl implements ApplicationRecordService {
     }
 
     @Override
-    public void migrateApplicationRecords(List<ApplicationRecordDTOMigrator> applicationRecordDTOMigrators) {
+    public void migrateApplicationRecord(Long vetProfileId, Long vetClincId, List<ApplicationRecordDTOMigrator> applicationRecordDTOMigrators) {
+            applicationRecordDTOMigrators.stream().parallel().forEach(applicationRecordDTOMigrator -> {
 
+                try {
+                    ApplicationRecord applicationRecord = applicationRecordMapper.applicationRecordDTOMigratorToApplicationRecord(applicationRecordDTOMigrator);
+                    applicationRecord.setDetails(null);
+                    applicationRecord.setLote(null);
+                    applicationRecord.setControlNumber(null);
+                    applicationRecord.setValid(true);
+                    applicationRecord.setQuantity(null);
+                    applicationRecord.setVetProfileId(vetProfileId);
+                    applicationRecord.setVetClinicId(vetClincId);
+
+                    applicationRecordRepository.save(applicationRecord);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
+            });
     }
 
-    @Override
+        @Override
     public ApplicationRecordResponse getLatestApplicationsForEachMedicineGroup(Long animalId, Long medicineGroupId) {
         return applicationRecordMapper.applicationRecordToApplicationRecordResponse(
                 applicationRecordRepository.findTopByAnimalIdAndMedicine_MedicineGroups_IdOrderByApplicationDateDesc(animalId, medicineGroupId)
