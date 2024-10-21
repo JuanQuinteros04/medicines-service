@@ -2,6 +2,7 @@ package com.liro.medicines.controllers;
 
 import com.liro.medicines.dto.ApiResponse;
 import com.liro.medicines.dto.ApplicationRecordDTO;
+import com.liro.medicines.dto.migrator.ApplicationRecordDTOMigrator;
 import com.liro.medicines.dto.responses.ApplicationRecordResponse;
 import com.liro.medicines.service.ApplicationRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/applicationRecords")
@@ -59,6 +61,16 @@ public class ApplicationRecordController {
 
         return ResponseEntity.created(location).body(
                 new ApiResponse(true, "ApplicationRecord created successfully"));
+    }
+
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ApiResponse> migrateApplicationRecord(@Valid @RequestBody List<ApplicationRecordDTOMigrator> applicationRecordDTOMigrators,
+                                                                @RequestParam("vetClinicId") Long vetClinicId,
+                                                                @RequestParam(name = "vetUserId") Long vetUserId){
+
+        applicationRecordService.migrateApplicationRecord(vetUserId, vetClinicId, applicationRecordDTOMigrators);
+
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping(value = "/latest-per-group", produces = {MediaType.APPLICATION_JSON_VALUE})
