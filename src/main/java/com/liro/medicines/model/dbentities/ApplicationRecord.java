@@ -21,6 +21,7 @@ public class ApplicationRecord {
 
     private Long animalId;
     private Long  vetProfileId;
+    private Long vetClinicId;
     private boolean valid;
     private String details;
 

@@ -36,8 +36,7 @@ public class ApplicationRecordController {
     public ResponseEntity<Page<ApplicationRecordResponse>> getAll(Pageable pageable,
                                                                   @RequestParam("animalId") Long animalId,
                                                                   @RequestParam(name = "medicineGroupId", required = false) Long medicineGroupId,
-                                                                  @RequestParam(name = "medicineTypeId", required = false) Long medicineTypeId,
-                                                                  @RequestHeader(name = "Authorization", required = false) String token) {
+                                                                  @RequestParam(name = "medicineTypeId", required = false) Long medicineTypeId) {
         if(medicineGroupId != null){
             return ResponseEntity.ok(applicationRecordService.findAllByAnimalIdAndMedicineMedicineGroupId(pageable, animalId, medicineGroupId));
         } else if (medicineTypeId != null) {
@@ -50,8 +49,9 @@ public class ApplicationRecordController {
 
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<ApiResponse> createApplicationRecord(@Valid @RequestBody ApplicationRecordDTO applicationRecordDto,
+                                                               @RequestHeader(name = "clinicId", required = false) Long clinicId,
                                                                @RequestHeader(name = "Authorization", required = false) String token) {
-        ApplicationRecordResponse applicationRecordResponse = applicationRecordService.createApplicationRecord(applicationRecordDto, token);
+        ApplicationRecordResponse applicationRecordResponse = applicationRecordService.createApplicationRecord(applicationRecordDto, token, clinicId);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/applicationRecords/{applicationRecordId}")

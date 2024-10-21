@@ -1,7 +1,6 @@
 package com.liro.medicines.service;
 
 import com.liro.medicines.dto.ApplicationRecordDTO;
-import com.liro.medicines.dto.migrator.ApplicationRecordDTOMigrator;
 import com.liro.medicines.dto.responses.ApplicationRecordResponse;
 import com.liro.medicines.model.dbentities.ApplicationRecord;
 import org.springframework.data.domain.Page;
@@ -15,10 +14,7 @@ public interface ApplicationRecordService {
 
     ApplicationRecordResponse findById(Long applicationRecordId);
 
-    ApplicationRecordResponse createApplicationRecord(ApplicationRecordDTO applicationRecordDTO, String token);
-
-    void migrateApplicationRecords(List<ApplicationRecordDTOMigrator> applicationRecordDTOMigrators);
-
+    ApplicationRecordResponse createApplicationRecord(ApplicationRecordDTO applicationRecordDTO, String token, Long clinicId);
     ApplicationRecordResponse getLatestApplicationsForEachMedicineGroup(Long animalId, Long medicineTypeId);
     ApplicationRecordResponse getLatestApplicationsForEachMedicineType(Long animalId, Long medicineTypeId);
 
