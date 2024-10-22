@@ -63,7 +63,7 @@ public class ApplicationRecordController {
                 new ApiResponse(true, "ApplicationRecord created successfully"));
     }
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+   /* @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse> migrateApplicationRecord(@Valid @RequestBody List<ApplicationRecordDTOMigrator> applicationRecordDTOMigrators,
                                                                 @RequestParam("vetClinicId") Long vetClinicId,
                                                                 @RequestParam(name = "vetUserId") Long vetUserId){
@@ -71,7 +71,7 @@ public class ApplicationRecordController {
         applicationRecordService.migrateApplicationRecord(vetUserId, vetClinicId, applicationRecordDTOMigrators);
 
         return ResponseEntity.ok().build();
-    }
+    }*/
 
     @GetMapping(value = "/latest-per-group", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<ApplicationRecordResponse> getLatestApplicationsForEachMedicineGroup(@RequestParam("animalId") Long animalId,
