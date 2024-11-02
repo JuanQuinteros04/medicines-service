@@ -9,7 +9,6 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface ComponentMapper {
 
-    @Mapping(target = "diseaseId", source = "disease.id")
     ComponentResponse componentTocomponentResponse(Component component);
 
     Component componentDtoToComponent(ComponentDTO componentDTO);
