@@ -134,6 +134,8 @@ public class MedicineServiceImpl implements MedicineService {
 
         medicineDTOMigratorList.forEach(medicineDTO -> {
 
+            System.out.println("MedicineDTO: " + medicineDTO);
+
             if (medicineDTO.getCommercialName() != null) {
                 medicineDTO.setCommercialName(medicineDTO.getCommercialName().toLowerCase());
             }
@@ -190,6 +192,7 @@ public class MedicineServiceImpl implements MedicineService {
                         })
                         .collect(Collectors.toList());
 
+                System.out.println(medicineGroups);
                 medicine.setMedicineGroups(medicineGroups);
 
             }
@@ -210,6 +213,7 @@ public class MedicineServiceImpl implements MedicineService {
                             ));
                         })
                         .collect(Collectors.toList());
+                System.out.println(components);
 
                 medicine.setComponents(components);
 
