@@ -13,4 +13,7 @@ import java.util.Optional;
 public interface MedicineTypeRepository extends JpaRepository<MedicineType, Long> {
 
     Page<MedicineType> findAllByNameContaining(String nameContaining, Pageable pageable);
+
+    Optional<MedicineType> findByName(String name);
+
 }

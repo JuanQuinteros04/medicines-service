@@ -13,5 +13,4 @@ import lombok.experimental.SuperBuilder;
 @Setter
 public class ComponentDTO {
     private String name;
-    private Long diseaseId;
 }

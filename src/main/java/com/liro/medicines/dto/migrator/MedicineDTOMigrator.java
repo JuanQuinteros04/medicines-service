@@ -23,7 +23,9 @@ public class MedicineDTOMigrator {
     private AnimalType animalType;
 
     private String brandName;
-    private Long medicineTypeId;
+    private String medicineType;
     private List<String> medicineGroups;
+    private List<String> components;
+
     private String presentationName;
 }

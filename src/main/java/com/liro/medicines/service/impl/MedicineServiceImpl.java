@@ -108,10 +108,10 @@ public class MedicineServiceImpl implements MedicineService {
         }
 
         if(medicineDTO.getComponents() != null){
-            HashSet<Component> components = (HashSet<Component>) medicineDTO.getComponents().stream()
+            List<Component> components =  medicineDTO.getComponents().stream()
                     .map(component -> componentRepository.findById(component)
                             .orElseThrow(() -> new ResourceNotFoundException("Component not found with id: " + component)))
-                    .collect(Collectors.toSet());
+                    .collect(Collectors.toList());
             medicine.setComponents(components);
 
         }
@@ -141,9 +141,15 @@ public class MedicineServiceImpl implements MedicineService {
                 medicineDTO.setFormalName(medicineDTO.getFormalName().toLowerCase());
             }
 
-            MedicineType medicineType = medicineTypeRepository.findById(medicineDTO.getMedicineTypeId())
-                    .orElseThrow(() -> new ResourceNotFoundException("MedicineType not found with id: " + medicineDTO.getMedicineTypeId()));
 
+            String normalizedMedicineTypeName = medicineDTO.getMedicineType().toLowerCase().trim();
+            Optional<MedicineType> optionalMedicineType = medicineTypeRepository.findByName(normalizedMedicineTypeName);
+
+            MedicineType medicineType = optionalMedicineType.orElseGet(() -> medicineTypeRepository.save(
+                    MedicineType.builder()
+                            .name(normalizedMedicineTypeName)
+                            .build()
+            ));
 
 
             String normalizedBrandName = medicineDTO.getBrandName().toLowerCase().trim();
@@ -185,6 +191,27 @@ public class MedicineServiceImpl implements MedicineService {
                         .collect(Collectors.toList());
 
                 medicine.setMedicineGroups(medicineGroups);
+
+            }
+
+            if(medicineDTO.getComponents() != null){
+                List<Component> components = medicineDTO.getComponents().stream()
+                        .map(component -> {
+
+                            String normalizedComponent = component.toLowerCase().trim();
+
+
+                            Optional<Component> optionalComponent = componentRepository.findByName(normalizedComponent);
+
+                            return optionalComponent.orElseGet(() -> componentRepository.save(
+                                    Component.builder()
+                                            .name(component)
+                                            .build()
+                            ));
+                        })
+                        .collect(Collectors.toList());
+
+                medicine.setComponents(components);
 
             }
 

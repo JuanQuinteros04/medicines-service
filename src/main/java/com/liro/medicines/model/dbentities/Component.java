@@ -18,8 +18,4 @@ public class Component {
 
     @Column(unique = true)
     private String name;
-
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "disease_id")
-    private Disease disease;
 }

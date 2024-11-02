@@ -4,6 +4,7 @@ import com.liro.medicines.model.enums.AnimalType;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -56,6 +57,6 @@ public class Medicine {
             joinColumns = @JoinColumn(name = "medicine_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "component_id", referencedColumnName = "id")
     )
-    private Set<Component> components = new HashSet<>();
+    private List<Component> components = new ArrayList<>();
 
 }
