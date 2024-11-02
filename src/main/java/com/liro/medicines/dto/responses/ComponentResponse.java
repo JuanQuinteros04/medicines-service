@@ -15,5 +15,4 @@ public class ComponentResponse {
 
     private Long id;
     private String name;
-    private Long diseaseId;
 }
