@@ -26,7 +26,7 @@ public class ApplicationRecord {
     private String details;
 
 //    @Min(value = 0, message = "The minimum value is 0!")
-    private Long quantity;
+    private Float quantity;
 
     private String lote;
     private String controlNumber;
