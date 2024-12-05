@@ -1,5 +1,6 @@
 package com.liro.medicines.model.dbentities;
 
+import com.liro.medicines.annotations.ValidEndDate;
 import lombok.*;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ValidEndDate
 public class ApplicationRecord {
 
     @Id
