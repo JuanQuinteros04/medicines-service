@@ -12,9 +12,9 @@ public class ValidEndDateValidator implements ConstraintValidator<ValidEndDate, 
     @Override
     public boolean isValid(ApplicationRecord applicationRecord, ConstraintValidatorContext context) {
         if (applicationRecord.getApplicationDate() == null || applicationRecord.getEndDate() == null) {
-            return true; // No validamos si alguno de los campos es nulo
+            return true;
         }
-        LocalDate maxEndDate = applicationRecord.getApplicationDate().plusDays(365);
+        LocalDate maxEndDate = applicationRecord.getApplicationDate().plusDays(395);
         return !applicationRecord.getEndDate().isAfter(maxEndDate);
     }
 }
