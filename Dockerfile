@@ -8,6 +8,7 @@ COPY ./mvnw .
 COPY ./.mvn .mvn
 COPY ./pom.xml .
 
+
 RUN ./mvnw dependency:go-offline
 
 COPY ./src ./src

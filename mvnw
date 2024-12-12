@@ -97,6 +97,8 @@ die() {
   exit 1
 }
 
+
+
 # parse distributionUrl and optional distributionSha256Sum, requires .mvn/wrapper/maven-wrapper.properties
 while IFS="=" read -r key value; do
   case "${key-}" in
