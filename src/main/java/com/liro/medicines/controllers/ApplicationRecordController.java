@@ -63,6 +63,17 @@ public class ApplicationRecordController {
                 new ApiResponse(true, "ApplicationRecord created successfully"));
     }
 
+    @PutMapping(value = "/{applicationRecordId}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<ApplicationRecordResponse> updateApplicationRecord(@Valid @RequestBody ApplicationRecordDTO applicationRecordDto,
+                                                               @PathVariable("applicationRecordId") Long applicationRecordId,
+                                                               @RequestHeader(name = "clinicId", required = false) Long clinicId,
+                                                               @RequestHeader(name = "Authorization", required = false) String token) {
+        ApplicationRecordResponse applicationRecordResponse = applicationRecordService.updateApplicationRecord(applicationRecordDto, token, clinicId, applicationRecordId);
+
+
+        return ResponseEntity.ok(applicationRecordResponse);
+    }
+
    /* @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse> migrateApplicationRecord(@Valid @RequestBody List<ApplicationRecordDTOMigrator> applicationRecordDTOMigrators,
                                                                 @RequestParam("vetClinicId") Long vetClinicId,

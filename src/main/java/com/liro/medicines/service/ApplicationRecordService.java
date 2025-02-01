@@ -16,6 +16,7 @@ public interface ApplicationRecordService {
     ApplicationRecordResponse findById(Long applicationRecordId);
 
     ApplicationRecordResponse createApplicationRecord(ApplicationRecordDTO applicationRecordDTO, String token, Long clinicId);
+    ApplicationRecordResponse updateApplicationRecord(ApplicationRecordDTO applicationRecordDTO, String token, Long clinicId, Long applicationRecordId);
 
     void migrateApplicationRecord(Long vetUserId, Long clinicId, List<ApplicationRecordDTOMigrator> applicationRecordDTOMigrators);
     ApplicationRecordResponse getLatestApplicationsForEachMedicineGroup(Long animalId, Long medicineTypeId);

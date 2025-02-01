@@ -7,6 +7,7 @@ import com.liro.medicines.dto.mappers.ApplicationRecordMapper;
 import com.liro.medicines.dto.migrator.ApplicationRecordDTOMigrator;
 import com.liro.medicines.dto.responses.ApplicationRecordResponse;
 import com.liro.medicines.exceptions.ResourceNotFoundException;
+import com.liro.medicines.exceptions.UnauthorizedException;
 import com.liro.medicines.model.dbentities.ApplicationRecord;
 import com.liro.medicines.model.dbentities.Medicine;
 import com.liro.medicines.repositories.*;
@@ -98,6 +99,32 @@ public class ApplicationRecordServiceImpl implements ApplicationRecordService {
                 applicationRecordRepository.save(applicationRecord)
         );
     }
+
+    @Override
+    public ApplicationRecordResponse updateApplicationRecord(ApplicationRecordDTO applicationRecordDTO, String token, Long clinicId, Long applicationRecordId) {
+
+        ApplicationRecord applicationRecord = applicationRecordRepository.findById(applicationRecordId)
+                .orElseThrow(() -> new ResourceNotFoundException("ApplicationRecord not found with id: " + applicationRecordId));
+
+        feignAnimalClient.hasPermissions(applicationRecordDTO.getAnimalId(), false, false, false, clinicId, token);
+
+        if(!clinicId.equals(applicationRecord.getVetClinicId())) {
+            throw new UnauthorizedException("You do not have permission to modify the application!!");
+        }
+
+
+        ApplicationRecord updateApplicationRecord = applicationRecordMapper.updateApplicationRecord(applicationRecordDTO, applicationRecord);
+
+
+        Medicine medicine = medicineRepository.findById(applicationRecordDTO.getMedicineId())
+                .orElseThrow(() -> new ResourceNotFoundException("Medicine not found with id: " + applicationRecordDTO.getMedicineId()));
+
+        updateApplicationRecord.setMedicine(medicine);
+
+
+        return applicationRecordMapper.applicationRecordToApplicationRecordResponse(
+                applicationRecordRepository.save(applicationRecord)
+        );    }
 
     @Override
     public void migrateApplicationRecord(Long vetProfileId, Long vetClincId, List<ApplicationRecordDTOMigrator> applicationRecordDTOMigrators) {
