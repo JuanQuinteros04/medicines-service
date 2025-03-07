@@ -24,4 +24,5 @@ public interface ApplicationRecordService {
 
     Page<ApplicationRecordResponse> findAllByAnimalIdAndMedicineMedicineGroupId(Pageable pageable, Long animalId, Long medicineGroupId);
     Page<ApplicationRecordResponse> findAllByAnimalIdAndMedicineMedicineTypeId(Pageable pageable, Long animalId, Long medicineTypeId);
+    void deleteApplicationRecordsByAnimalId(Long animalId, Long clinicId);
 }

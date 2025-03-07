@@ -173,4 +173,11 @@ public class ApplicationRecordServiceImpl implements ApplicationRecordService {
         return applicationRecordRepository.findAllByAnimalIdAndMedicineMedicineTypeId(animalId, medicineTypeId, pageable)
                 .map(applicationRecordMapper::applicationRecordToApplicationRecordResponse);
     }
+
+    @Override
+    public void deleteApplicationRecordsByAnimalId(Long animalId, Long clinicId) {
+
+        applicationRecordRepository.deleteByAnimalId(animalId);
+
+    }
 }

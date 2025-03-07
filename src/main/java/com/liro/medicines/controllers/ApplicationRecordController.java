@@ -74,6 +74,14 @@ public class ApplicationRecordController {
         return ResponseEntity.ok(applicationRecordResponse);
     }
 
+    @DeleteMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Void> deleteApplicationRecordByAnimalId(@RequestParam("animalId") Long animalId,
+                                             @RequestHeader(name = "clinicId", required = false) Long clinicId) {
+        applicationRecordService.deleteApplicationRecordsByAnimalId(animalId,clinicId);
+
+        return ResponseEntity.ok().build();
+    }
+
    /* @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse> migrateApplicationRecord(@Valid @RequestBody List<ApplicationRecordDTOMigrator> applicationRecordDTOMigrators,
                                                                 @RequestParam("vetClinicId") Long vetClinicId,
