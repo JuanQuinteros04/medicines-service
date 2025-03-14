@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class BrandServiceImpl implements BrandService {
@@ -25,11 +26,13 @@ public class BrandServiceImpl implements BrandService {
     }
 
 
+    @Transactional(readOnly = true)
     @Override
     public Page<BrandResponse> findAll(Pageable pageable) {
         return brandRepository.findAll(pageable).map(brandMapper::brandToBrandResponse);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public BrandResponse findById(Long brandId) {
         Brand brand = brandRepository.findById(brandId)
@@ -37,6 +40,7 @@ public class BrandServiceImpl implements BrandService {
         return brandMapper.brandToBrandResponse(brand);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Page<BrandResponse> findAllByNameContaining(String nameContaining, Pageable pageable) {
         nameContaining = nameContaining.toLowerCase();
@@ -45,6 +49,7 @@ public class BrandServiceImpl implements BrandService {
                 .map(brandMapper::brandToBrandResponse);
     }
 
+    @Transactional
     @Override
     public BrandResponse createBrand(BrandDTO brandDTO) {
 

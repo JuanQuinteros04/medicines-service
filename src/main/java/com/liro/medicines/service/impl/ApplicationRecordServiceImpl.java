@@ -15,6 +15,7 @@ import com.liro.medicines.service.ApplicationRecordService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
@@ -61,11 +62,13 @@ public class ApplicationRecordServiceImpl implements ApplicationRecordService {
 
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Page<ApplicationRecordResponse> findAll(Pageable pageable) {
         return applicationRecordRepository.findAll(pageable).map(applicationRecordMapper::applicationRecordToApplicationRecordResponse);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public ApplicationRecordResponse findById(Long applicationRecordId) {
         ApplicationRecord applicationRecord = applicationRecordRepository.findById(applicationRecordId)
@@ -75,6 +78,7 @@ public class ApplicationRecordServiceImpl implements ApplicationRecordService {
     }
 
 
+    @Transactional
     @Override
     public ApplicationRecordResponse createApplicationRecord(ApplicationRecordDTO applicationRecordDTO, String token, Long clinicId) {
         feignAnimalClient.hasPermissions(applicationRecordDTO.getAnimalId(), false, false, false, clinicId, token);
@@ -100,6 +104,7 @@ public class ApplicationRecordServiceImpl implements ApplicationRecordService {
         );
     }
 
+    @Transactional
     @Override
     public ApplicationRecordResponse updateApplicationRecord(ApplicationRecordDTO applicationRecordDTO, String token, Long clinicId, Long applicationRecordId) {
 
@@ -126,6 +131,7 @@ public class ApplicationRecordServiceImpl implements ApplicationRecordService {
                 applicationRecordRepository.save(applicationRecord)
         );    }
 
+    @Transactional
     @Override
     public void migrateApplicationRecord(Long vetProfileId, Long vetClincId, List<ApplicationRecordDTOMigrator> applicationRecordDTOMigrators) {
             applicationRecordDTOMigrators.stream().parallel().forEach(applicationRecordDTOMigrator -> {

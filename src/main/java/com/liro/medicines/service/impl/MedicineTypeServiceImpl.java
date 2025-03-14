@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import com.liro.medicines.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MedicineTypeServiceImpl implements MedicineTypeService {
@@ -22,11 +23,13 @@ public class MedicineTypeServiceImpl implements MedicineTypeService {
         this.medicineTypeMapper = medicineTypeMapper;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Page<MedicineTypeResponse> findAll(Pageable pageable) {
         return medicineTypeRepository.findAll(pageable).map(medicineTypeMapper::medicineTypeToMedicineTypeResponse);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public MedicineTypeResponse findById(Long medicineTypeId) {
         MedicineType medicineType = medicineTypeRepository.findById(medicineTypeId)
@@ -34,6 +37,7 @@ public class MedicineTypeServiceImpl implements MedicineTypeService {
 
         return medicineTypeMapper.medicineTypeToMedicineTypeResponse(medicineType);    }
 
+    @Transactional(readOnly = true)
     @Override
     public Page<MedicineTypeResponse> findAllByNameContaining(String nameContaining, Pageable pageable) {
         nameContaining = nameContaining.toLowerCase();
@@ -42,6 +46,7 @@ public class MedicineTypeServiceImpl implements MedicineTypeService {
                 .map(medicineTypeMapper::medicineTypeToMedicineTypeResponse);
     }
 
+    @Transactional
     @Override
     public MedicineTypeResponse createMedicineType(MedicineTypeDTO medicineTypeDTO) {
 

@@ -13,8 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -50,11 +50,13 @@ public class MedicineServiceImpl implements MedicineService {
         this.componentRepository = componentRepository;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Page<MedicineResponse> findAll(Pageable pageable) {
         return medicineRepository.findAll(pageable).map(medicineMapper::medicineToMedicineResponse);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public MedicineResponse findById(Long medicineId) {
         Medicine medicine = medicineRepository.findById(medicineId)
@@ -63,6 +65,7 @@ public class MedicineServiceImpl implements MedicineService {
         return medicineMapper.medicineToMedicineResponse(medicine);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Page<MedicineResponse> findAllByCommercialNameContainingAndMedicineTypeId(String nameContaining, AnimalType animalType,Long medicineTypeId, Pageable pageable) {
         nameContaining = nameContaining.toLowerCase();
@@ -73,6 +76,7 @@ public class MedicineServiceImpl implements MedicineService {
         return medicines.map(medicineMapper::medicineToMedicineResponse);
     }
 
+    @Transactional
     @Override
     public MedicineResponse createMedicine(MedicineDTO medicineDTO) {
         if (medicineDTO.getCommercialName() != null) {

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import com.liro.medicines.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MedicineGroupServiceImpl implements MedicineGroupService {
@@ -23,11 +24,13 @@ public class MedicineGroupServiceImpl implements MedicineGroupService {
         this.medicineGroupMapper = medicineGroupMapper;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Page<MedicineGroupResponse> findAll(Pageable pageable) {
         return medicineGroupRepository.findAll(pageable).map(medicineGroupMapper::medicineGroupToMedicineGroupResponse);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public MedicineGroupResponse findById(Long medicineGroupId) {
         MedicineGroup medicineGroup = medicineGroupRepository.findById(medicineGroupId)
@@ -35,6 +38,7 @@ public class MedicineGroupServiceImpl implements MedicineGroupService {
 
         return medicineGroupMapper.medicineGroupToMedicineGroupResponse(medicineGroup);    }
 
+    @Transactional(readOnly = true)
     @Override
     public Page<MedicineGroupResponse> findAllByNameContaining(String nameContaining, Pageable pageable) {
         nameContaining = nameContaining.toLowerCase();
@@ -43,6 +47,7 @@ public class MedicineGroupServiceImpl implements MedicineGroupService {
                 .map(medicineGroupMapper::medicineGroupToMedicineGroupResponse);
     }
 
+    @Transactional
     @Override
     public MedicineGroupResponse createMedicineGroup(MedicineGroupDTO medicineGroupDTO) {
 

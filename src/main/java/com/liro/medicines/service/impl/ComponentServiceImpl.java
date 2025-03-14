@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import com.liro.medicines.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ComponentServiceImpl implements ComponentService {
@@ -24,11 +25,13 @@ public class ComponentServiceImpl implements ComponentService {
         this.componentMapper = componentMapper;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Page<ComponentResponse> findAll(Pageable pageable) {
         return componentRepository.findAll(pageable).map(componentMapper::componentTocomponentResponse);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public ComponentResponse findById(Long componentId) {
         Component component = componentRepository.findById(componentId)
@@ -36,6 +39,7 @@ public class ComponentServiceImpl implements ComponentService {
 
         return componentMapper.componentTocomponentResponse(component);    }
 
+    @Transactional(readOnly = true)
     @Override
     public Page<ComponentResponse> findAllByNameContaining(String nameContaining, Pageable pageable) {
         nameContaining = nameContaining.toLowerCase();
@@ -44,6 +48,7 @@ public class ComponentServiceImpl implements ComponentService {
                 .map(componentMapper::componentTocomponentResponse);
     }
 
+    @Transactional
     @Override
     public ComponentResponse createComponent(ComponentDTO componentDTO) {
 
